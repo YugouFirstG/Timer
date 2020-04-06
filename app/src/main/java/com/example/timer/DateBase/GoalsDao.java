@@ -1,4 +1,4 @@
-package com.example.timer.Utils;
+package com.example.timer.DateBase;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -8,7 +8,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import com.example.timer.Interfaces.Modify;
-import com.example.timer.Model.Goal;
+
+import com.example.timer.Model.GoalBean;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,8 +27,10 @@ public class GoalsDao implements Modify {
                 "test2(id integer primary key autoincrement,"+
                 "title text," +
                 "content text," +
+                "startTime time," +
+                "estimateTime integer," +
                 "startDate date," +
-                "endDate date)";
+                "type text)";
         mDB.execSQL(sql);
     }
 
@@ -38,8 +41,8 @@ public class GoalsDao implements Modify {
         return INSTANCE;
     }
 
-    public List<Goal> select(){
-        List<Goal> list = new ArrayList<Goal>();
+    public List<GoalBean> select(){
+        List<GoalBean> list = new ArrayList<GoalBean>();
         Cursor cursor = mDB.query(
                 TABLE_NAME,
                 null,
@@ -52,18 +55,19 @@ public class GoalsDao implements Modify {
 
         if(cursor.getCount()>0){
             while (cursor.moveToNext()){
-                Goal g = new Goal(
+                GoalBean g = new GoalBean(
+                        cursor.getString(cursor.getColumnIndex("type")),
                         cursor.getString(cursor.getColumnIndex("title")),
-                        cursor.getString(cursor.getColumnIndex("startDate")),
-                        cursor.getString(cursor.getColumnIndex("endDate")),
                         cursor.getString(cursor.getColumnIndex("content")),
-                        cursor.getInt(cursor.getColumnIndex("id"))
-                        );
+                        cursor.getString(cursor.getColumnIndex("startTime")),
+                        cursor.getInt(cursor.getColumnIndex("estimateTime")),
+                        cursor.getString(cursor.getColumnIndex("startDate"))
+                );
+                g.setId(cursor.getInt(cursor.getColumnIndex("id")));
                 list.add(g);
             }
             cursor.close();
         }
-
         return list;
     }
 

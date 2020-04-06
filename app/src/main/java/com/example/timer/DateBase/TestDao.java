@@ -1,4 +1,4 @@
-package com.example.timer.Utils;
+package com.example.timer.DateBase;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -11,7 +11,7 @@ import java.util.List;
 
 public class TestDao {
     private  static TestDao INSTANCE = null;
-    private  DatabaseHelper mHelper = null;
+    private DatabaseHelper mHelper = null;
     private SQLiteDatabase mDB = null;
     private TestDao(Context context){
         mHelper = new DatabaseHelper(context,"timer_db",null,1);
