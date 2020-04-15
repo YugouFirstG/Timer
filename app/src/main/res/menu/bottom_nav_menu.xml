@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/bottom_nav_plan"
+        android:title="@string/bottom_nav_plan" />
+    <item
+        android:id="@+id/bottom_nav_habit"
+        android:title="@string/bottom_nav_habit" />
+    <item
+        android:id="@+id/bottom_nav_statistic"
+        android:title="@string/bottom_nav_statistic" />
+</menu>

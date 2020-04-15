@@ -85,15 +85,18 @@ public class GoalsDao implements Modify {
 
     @Override
     public void update(ContentValues values) {
-        mDB.update(TABLE_NAME,values,"title",null);
+        mDB.update(TABLE_NAME, values, "id", null);
     }
 
     @Override
-    public void delete(String t) {
-        mDB.execSQL("delete from "+TABLE_NAME+" where title "+"="+t);
+    public void delete(int t) {
+        mDB.execSQL("delete from " + TABLE_NAME + " where id " + "=" + t);
     }
 
-    public void dropTable(){
+    @Override
+    public void dropTable() {
         mDB.execSQL("drop table "+TABLE_NAME);
     }
+
+
 }

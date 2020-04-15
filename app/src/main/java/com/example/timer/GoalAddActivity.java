@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.ContentValues;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -105,6 +106,10 @@ public class GoalAddActivity extends AppCompatActivity implements View.OnClickLi
             Toast.makeText(this,"请将信息填写完整",Toast.LENGTH_SHORT).show();
         }else{
             addToDateBase();
+            Intent intent = new Intent(this, MainActivity.class);
+            intent.putExtra("isExit", true);
+            startActivity(intent);
+            finish();
         }
     }
 

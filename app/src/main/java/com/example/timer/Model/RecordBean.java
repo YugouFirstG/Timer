@@ -2,30 +2,30 @@ package com.example.timer.Model;
 
 import com.example.timer.MainActivity;
 
-public class GoalBean /*implements MainActivity.IViewType*/ {
+public class RecordBean /*implements MainActivity.IViewType*/ {
     private String type;
     private String title;
     private String content;
     private String startTime;
-    private int estimate_duration;
+    private int costTime;
     private String date;
     private int id;
 
-    public GoalBean(String type, String title, String content, String startTime, int estimate_duration,String date) {
+    public RecordBean(String type, String title, String content, String startTime, int costTime, String date) {
         this.type = type;
         this.title = title;
         this.content = content;
         this.startTime = startTime;
-        this.estimate_duration = estimate_duration;
+        this.costTime = costTime;
         this.date = date;
     }
 
-    public void updateData(String type, String title, String content, String startTime, int estimate_duration,String date) {
+    public void updateData(String type, String title, String content, String startTime, int costTime, String date) {
         this.type = type;
         this.title = title;
         this.content = content;
         this.startTime = startTime;
-        this.estimate_duration = estimate_duration;
+        this.costTime = costTime;
         this.date = date;
     }
 
@@ -53,8 +53,8 @@ public class GoalBean /*implements MainActivity.IViewType*/ {
         return id;
     }
 
-    public int getEstimateDuration() {
-        return estimate_duration;
+    public int getCostTime() {
+        return costTime;
     }
 
     public String getDate() {
@@ -63,6 +63,6 @@ public class GoalBean /*implements MainActivity.IViewType*/ {
 
 //    @Override
 //    public int getItemType() {
-//        return 1;
+//        return 0;
 //    }
 }
