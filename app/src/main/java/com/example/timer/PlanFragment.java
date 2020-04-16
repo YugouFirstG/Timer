@@ -1,6 +1,5 @@
 package com.example.timer;
 
-import android.content.Context;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -13,8 +12,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.timer.Adapter.QuickAdapter;
-import com.example.timer.Adapter.QuickViewHolder;
+import com.example.timer.Adapter.CommAdapter;
+import com.example.timer.Interfaces.IViewType;
 import com.example.timer.Interfaces.QuickMultiSupport;
 import com.example.timer.Model.MultiBean;
 import com.haibin.calendarview.Calendar;
@@ -113,6 +112,7 @@ public class PlanFragment extends Fragment implements CalendarView.OnCalendarSel
     }
 
     private void initData() {
+        mData.clear();
         for (int i = 0; i < 199; i++) {
             MultiBean bean = new MultiBean();
             bean.name = "mData----" + i;
@@ -145,32 +145,5 @@ public class PlanFragment extends Fragment implements CalendarView.OnCalendarSel
         };
 
     }
-
-    public interface IViewType {
-        int getItemType();
-    }
-
-    class CommAdapter extends QuickAdapter<IViewType> {
-
-        public CommAdapter(Context context, List<IViewType> data, int layoutId) {
-            super(context, data, layoutId);
-        }
-
-        public CommAdapter(Context context, List<IViewType> data, QuickMultiSupport<IViewType> support) {
-            super(context, data, support);
-        }
-
-        @Override
-        protected void convert(QuickViewHolder holder, IViewType item, final int position) {
-            holder.setText(R.id.item_title, item.toString());
-            holder.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    remove(position);
-                }
-            });
-        }
-    }
-
 
 }

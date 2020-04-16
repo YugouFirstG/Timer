@@ -5,12 +5,8 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
-
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.viewpager.widget.ViewPager;
-
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -37,8 +33,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
-        //   initData();
         initViews();
     }
 
@@ -67,15 +61,8 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 //        }
     }
 
-//    @Override
-//    public void onRefresh() {
-//      //  initData();
-//        initViews();
-//    }
 
 
-    private void initData() {
-    }
 
 
     private void initViews() {
@@ -83,6 +70,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
         viewPager = findViewById(R.id.common_view_pager);
+        viewPager.setOffscreenPageLimit(3);
         bottom_nav = findViewById(R.id.bottom_nav);
         bottom_nav.setOnNavigationItemSelectedListener(this);
         fragments = new ArrayList<>();

@@ -1,8 +1,9 @@
 package com.example.timer.Model;
 
-import com.example.timer.ListExampleActivity;
 
-public class RecordingBean implements ListExampleActivity.IViewType {
+import com.example.timer.Interfaces.IViewType;
+
+public class RecordingBean implements IViewType {
     private String type;
     private String title;
     private String content;
