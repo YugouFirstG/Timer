@@ -19,7 +19,7 @@ import android.widget.Toast;
 import com.example.timer.Utils.DateUtils;
 import com.example.timer.DateBase.GoalsDao;
 
-public class GoalAddActivity extends AppCompatActivity implements View.OnClickListener {
+public class GoalAddActivity extends BaseActivity implements View.OnClickListener {
 
     private final String TAG = "GoalAddActivity";
 

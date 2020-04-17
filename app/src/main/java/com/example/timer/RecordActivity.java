@@ -8,7 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Chronometer;
 
-public class RecordActivity extends AppCompatActivity implements View.OnClickListener, Chronometer.OnChronometerTickListener {
+public class RecordActivity extends BaseActivity implements View.OnClickListener, Chronometer.OnChronometerTickListener {
 
     Chronometer mChronometer;
 

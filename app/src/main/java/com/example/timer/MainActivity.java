@@ -22,7 +22,7 @@ import java.util.List;
 
 
 @SuppressLint("NewApi")
-public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener, View.OnScrollChangeListener, ViewPager.OnPageChangeListener, View.OnClickListener {
+public class MainActivity extends BaseActivity implements BottomNavigationView.OnNavigationItemSelectedListener, View.OnScrollChangeListener, ViewPager.OnPageChangeListener, View.OnClickListener {
     private ViewPager viewPager;
     private List<Fragment> fragments;
     private BottomNavigationView bottom_nav;
