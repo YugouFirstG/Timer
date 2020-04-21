@@ -12,18 +12,24 @@ import android.view.Menu;
 import com.example.timer.Adapter.QuickFragmentPageAdapter;
 
 import com.flyco.tablayout.SlidingTabLayout;
+import com.flyco.tablayout.listener.OnTabSelectListener;
 
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 
 @SuppressLint("NewApi")
-public class MainActivity extends BaseActivity {
+public class MainActivity extends BaseActivity implements OnTabSelectListener {
     private ViewPager viewPager;
     private List<Fragment> fragments;
     private SlidingTabLayout tabLayout;
 
+    private Toolbar mToolbar;
+    private int menuPosition;
+    private int mMouth;
+    private String[]mouth = {"January","February","March","April","May","June","July","August","September","October","November","December"};
 
 
     @Override
@@ -32,6 +38,8 @@ public class MainActivity extends BaseActivity {
         setContentView(R.layout.activity_main);
 
         initViews();
+        Calendar calendar = Calendar.getInstance();
+        mMouth = (calendar.get(Calendar.MONTH));
     }
 //
 //    @Override
@@ -62,8 +70,9 @@ public class MainActivity extends BaseActivity {
 
 
     private void initViews() {
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        mToolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(mToolbar);
+        getSupportActionBar().setTitle("计划");
         ActionBar actionBar = getSupportActionBar();
         viewPager = findViewById(R.id.common_view_pager);
         viewPager.setOffscreenPageLimit(3);
@@ -75,13 +84,40 @@ public class MainActivity extends BaseActivity {
         fragments.add(new StatisticFragment());
         viewPager.setAdapter(new QuickFragmentPageAdapter<>(getSupportFragmentManager(), 0, fragments));
         tabLayout.setViewPager(viewPager, mTitlesArrays);
+        tabLayout.setOnTabSelectListener(this);
 
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.appbar_menu, menu);
+        menu.clear();
+        switch (menuPosition){
+            case 2:
+                getMenuInflater().inflate(R.menu.statistic_toolbar_menu, menu);
+                break;
+            default:
+                getMenuInflater().inflate(R.menu.appbar_menu, menu);
+                break;
+        }
         return true;
     }
 
+    @SuppressLint("RestrictedApi")
+    @Override
+    public void onTabSelect(int position) {
+        menuPosition = position;
+        if (fragments.get(position)==fragments.get(0)){
+            getSupportActionBar().setTitle("计划");
+        }else if(fragments.get(position)==fragments.get(1)){
+            getSupportActionBar().setTitle("习惯");
+        }else {
+            getSupportActionBar().setTitle(mouth[mMouth]+"");
+        }
+        getSupportActionBar().invalidateOptionsMenu();
+    }
+
+    @Override
+    public void onTabReselect(int position) {
+
+    }
 }
