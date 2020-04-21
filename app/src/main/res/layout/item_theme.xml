@@ -1,12 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="64dp"
+    android:padding="16dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <com.github.mikephil.charting.charts.BarChart
+    <TextView
+        android:padding="8dp"
+        android:id="@+id/item_head"
+        android:layout_width="60dp"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical"
+        android:text="@string/app_name" />
 
-        android:id="@+id/b_chart"
-        android:layout_margin="32dp"
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:layout_height="match_parent"
+        android:layout_toRightOf="@+id/item_head"
+        android:layout_toEndOf="@+id/item_head"
+        app:cardCornerRadius="8dp">
+
+        <com.daimajia.numberprogressbar.NumberProgressBar
+            android:id="@+id/item_progress"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:progress_current="80"
+            app:progress_max="100"
+            app:progress_reached_bar_height="64dp"
+            app:progress_reached_color="#3498DB"
+            app:progress_text_color="#3498DB"
+            app:progress_text_offset="1dp"
+            app:progress_text_size="10sp"
+            app:progress_text_visibility="invisible"
+            app:progress_unreached_bar_height="64dp"
+            app:progress_unreached_color="#CCCCCC" />
+
+        <TextView
+            android:id="@+id/detail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal|center_vertical"
+            android:text="@string/app_name"
+            android:textColor="#FBFAFF" />
+    </androidx.cardview.widget.CardView>
+
+
+</RelativeLayout>

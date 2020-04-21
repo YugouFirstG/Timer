@@ -1,12 +1,9 @@
 package com.example.timer.Adapter;
 
 import android.content.Context;
-import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.Typeface;
-import android.widget.TextView;
 
-import com.daimajia.numberprogressbar.NumberProgressBar;
 import com.example.timer.Interfaces.IViewType;
 import com.example.timer.Interfaces.QuickMultiSupport;
 import com.example.timer.R;
@@ -20,36 +17,24 @@ import com.github.mikephil.charting.formatter.PercentFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class StatisticAdapter extends QuickAdapter<IViewType> {
+public class CalendarAdapter extends QuickAdapter<IViewType> {
+    private PieChart pieChart;
 
-    private NumberProgressBar progressBar;
-    public StatisticAdapter(Context context, List<IViewType> data, int layoutId) {
+    public CalendarAdapter(Context context, List<IViewType> data, int layoutId) {
         super(context, data, layoutId);
     }
 
-    public StatisticAdapter(Context context, List<IViewType> data, QuickMultiSupport<IViewType> support) {
+    public CalendarAdapter(Context context, List<IViewType> data, QuickMultiSupport<IViewType> support) {
         super(context, data, support);
     }
 
     @Override
     protected void convert(QuickViewHolder holder, IViewType item, int position) {
-        switch (item.getItemType()) {
-            case 0:
 
-                if (holder.getView(R.id.item_head) != null) {
-                    TextView tv = holder.getView(R.id.item_head);
-                    TextView detail = holder.getView(R.id.detail);
-                    detail.setText("detail");
-                    tv.setText("Test");
-                    progressBar = holder.getView(R.id.item_progress);
-                }
-                break;
-            case 1:
-                break;
-            default:
-                break;
+        if (holder.getView(R.id.p_chart) != null) {
+            pieChart = holder.getView(R.id.p_chart);
+            drawDailyStatics(pieChart);
         }
-
     }
 
     private void drawDailyStatics(PieChart pieChart) {

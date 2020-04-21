@@ -35,102 +35,34 @@
 
         </androidx.viewpager.widget.ViewPager>
 
-
-        <!--
- <androidx.swiperefreshlayout.widget.SwipeRefreshLayout-->
-        <!--            android:id="@+id/srl_goal_list"-->
-        <!--            android:layout_width="match_parent"-->
-        <!--            android:layout_height="295dp"-->
-        <!--            app:layout_constraintStart_toStartOf="parent"-->
-        <!--            app:layout_constraintTop_toTopOf="parent"-->
-        <!--            android:layout_marginTop="?attr/actionBarSize"-->
-        <!--            >-->
-
-        <!--            <androidx.recyclerview.widget.RecyclerView-->
-        <!--                android:id="@+id/goal_list"-->
-        <!--                android:layout_width="match_parent"-->
-        <!--                android:layout_height="295dp"-->
-        <!--                android:layout_marginStart="0dp"-->
-        <!--                android:layout_marginLeft="1dp"-->
-        <!--                android:layout_marginTop="181dp"-->
-        <!--                app:layout_constraintStart_toStartOf="parent"-->
-        <!--                app:layout_constraintTop_toTopOf="parent" />-->
-        <!--        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>-->
-
-        <!--        <Button-->
-        <!--            android:id="@+id/insert"-->
-        <!--            android:layout_width="wrap_content"-->
-        <!--            android:layout_height="wrap_content"-->
-        <!--            android:layout_marginStart="34dp"-->
-        <!--            android:layout_marginLeft="34dp"-->
-        <!--            android:layout_marginTop="477dp"-->
-        <!--            android:text="insert"-->
-        <!--            app:layout_constraintStart_toStartOf="parent"-->
-        <!--            app:layout_constraintTop_toTopOf="parent" />-->
-
-        <!--        <Button-->
-        <!--            android:id="@+id/update"-->
-        <!--            android:layout_width="wrap_content"-->
-        <!--            android:layout_height="wrap_content"-->
-        <!--            android:layout_marginStart="146dp"-->
-        <!--            android:layout_marginLeft="146dp"-->
-        <!--            android:layout_marginTop="477dp"-->
-        <!--            android:text="update"-->
-        <!--            app:layout_constraintStart_toStartOf="parent"-->
-        <!--            app:layout_constraintTop_toTopOf="parent" />-->
-
-        <!--        <Button-->
-        <!--            android:id="@+id/delete"-->
-        <!--            android:layout_width="wrap_content"-->
-        <!--            android:layout_height="wrap_content"-->
-        <!--            android:layout_marginStart="266dp"-->
-        <!--            android:layout_marginLeft="266dp"-->
-        <!--            android:layout_marginTop="477dp"-->
-        <!--            android:text="del"-->
-        <!--            app:layout_constraintStart_toStartOf="parent"-->
-        <!--            app:layout_constraintTop_toTopOf="parent" />-->
-
-        <!--        <Button-->
-        <!--            android:id="@+id/select"-->
-        <!--            android:layout_width="wrap_content"-->
-        <!--            android:layout_height="wrap_content"-->
-        <!--            android:layout_marginStart="39dp"-->
-        <!--            android:layout_marginLeft="39dp"-->
-        <!--            android:layout_marginTop="558dp"-->
-        <!--            android:text="sel"-->
-        <!--            app:layout_constraintStart_toStartOf="parent"-->
-        <!--            app:layout_constraintTop_toTopOf="parent" />-->
-
-        <!--        <com.google.android.material.floatingactionbutton.FloatingActionButton-->
-        <!--            android:id="@+id/add_goal"-->
-        <!--            android:layout_width="40dp"-->
-        <!--            android:layout_height="40dp"-->
-        <!--            android:layout_marginStart="297dp"-->
-        <!--            android:layout_marginLeft="297dp"-->
-        <!--            android:layout_marginTop="606dp"-->
-        <!--            app:layout_constraintStart_toStartOf="parent"-->
-        <!--            app:layout_constraintTop_toTopOf="parent" />
-        -->
-
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bottom_nav"
-        android:layout_width="match_parent"
-        android:layout_height="56dp"
-        app:layout_anchorGravity="center"
-        app:menu="@menu/bottom_nav_menu"
-        android:textAlignment="center"
-        android:paddingBottom="8dp"
-        app:labelVisibilityMode="auto"
-        app:itemTextColor="@drawable/bottom_nav_selector"
-        android:background="@color/colorAccent"
+    <com.flyco.tablayout.SlidingTabLayout
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        android:layout_gravity="center_horizontal"
-        android:gravity="center_horizontal">
+        android:id="@+id/tab_layout"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/colorAccent"
+        app:tl_tab_space_equal="true"
+        />
 
-    </com.google.android.material.bottomnavigation.BottomNavigationView>
+<!--    <com.google.android.material.bottomnavigation.BottomNavigationView-->
+<!--        android:id="@+id/bottom_nav"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="56dp"-->
+<!--        app:layout_anchorGravity="center"-->
+<!--        app:menu="@menu/bottom_nav_menu"-->
+<!--        android:textAlignment="center"-->
+<!--        android:paddingBottom="8dp"-->
+<!--        app:labelVisibilityMode="auto"-->
+<!--        app:itemTextColor="@drawable/bottom_nav_selector"-->
+<!--        android:background="@color/colorAccent"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintLeft_toLeftOf="parent"-->
+<!--        app:layout_constraintRight_toRightOf="parent"-->
+<!--        android:layout_gravity="center_horizontal"-->
+<!--        android:gravity="center_horizontal">-->
+
+<!--    </com.google.android.material.bottomnavigation.BottomNavigationView>-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>
