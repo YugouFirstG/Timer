@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/day"
+        android:title="日统计" />
+    <item
+        android:id="@+id/week"
+        android:title="周统计"/>
+    <item
+        android:id="@+id/mouth"
+        android:title="月统计"/>
+</menu>

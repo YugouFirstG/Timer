@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,6 +19,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 
@@ -26,7 +28,10 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
     private ViewPager viewPager;
     private List<Fragment> fragments;
     private BottomNavigationView bottom_nav;
-
+    private Toolbar mToolbar;
+    private int menuPosition;
+    private int mMouth;
+    private String[]mouth = {"January","February","March","April","May","June","July","August","September","October","November","December"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +39,9 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
         setContentView(R.layout.activity_main);
 
         initViews();
+        Calendar calendar = Calendar.getInstance();
+        mMouth = (calendar.get(Calendar.MONTH));
+        Log.d("123", "onCreate: "+mMouth);
     }
 
     @Override
@@ -66,8 +74,9 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
 
 
     private void initViews() {
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        mToolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(mToolbar);
+        getSupportActionBar().setTitle("计划");
         ActionBar actionBar = getSupportActionBar();
         viewPager = findViewById(R.id.common_view_pager);
         viewPager.setOffscreenPageLimit(3);
@@ -83,7 +92,20 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.appbar_menu, menu);
+        menu.clear();
+        switch (menuPosition){
+            case 0:
+                getMenuInflater().inflate(R.menu.appbar_menu, menu);
+                break;
+            case 1:
+                getMenuInflater().inflate(R.menu.appbar_menu, menu);
+                break;
+            case 2:
+                getMenuInflater().inflate(R.menu.statistic_toolbar_menu, menu);
+                break;
+            default:
+                break;
+        }
         return true;
     }
 
@@ -102,7 +124,6 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
             default:
                 break;
         }
-
         return false;
     }
 
@@ -111,10 +132,20 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
 
     }
 
+    @SuppressLint("RestrictedApi")
     @Override
     public void onPageSelected(int position) {
+        menuPosition = position;
         bottom_nav.setSelected(false);
         bottom_nav.getMenu().getItem(viewPager.getCurrentItem()).setChecked(true);
+        if (fragments.get(position)==fragments.get(0)){
+            getSupportActionBar().setTitle("计划");
+        }else if(fragments.get(position)==fragments.get(1)){
+            getSupportActionBar().setTitle("习惯");
+        }else {
+            getSupportActionBar().setTitle(mouth[mMouth]+"");
+        }
+        getSupportActionBar().invalidateOptionsMenu();
     }
 
     @Override
