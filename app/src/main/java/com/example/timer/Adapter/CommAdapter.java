@@ -1,8 +1,16 @@
 package com.example.timer.Adapter;
 
 import android.content.Context;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
 
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.daimajia.swipe.SwipeLayout;
+import com.daimajia.swipe.adapters.RecyclerSwipeAdapter;
 import com.example.timer.Interfaces.IViewType;
 import com.example.timer.Interfaces.QuickMultiSupport;
 
@@ -10,24 +18,54 @@ import com.example.timer.R;
 
 import java.util.List;
 
-public class CommAdapter extends QuickAdapter<IViewType> {
+public class CommAdapter extends RecyclerSwipeAdapter<CommAdapter.CommAdapterHolder> {
 
-    public CommAdapter(Context context, List<IViewType> data, int layoutId) {
-        super(context, data, layoutId);
+    private Context context;
+    private List<IViewType> data;
+    public CommAdapter(Context context, List<IViewType> data) {
+        this.context = context;
+        this.data = data;
     }
 
-    public CommAdapter(Context context, List<IViewType> data, QuickMultiSupport<IViewType> support) {
-        super(context, data, support);
+
+    @Override
+    public CommAdapterHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_habit, parent, false);
+        return new CommAdapterHolder(view);
     }
 
     @Override
-    protected void convert(QuickViewHolder holder, IViewType item, final int position) {
-        holder.setText(R.id.item_title, item.toString());
-        holder.setOnClickListener(new View.OnClickListener() {
+    public void onBindViewHolder(CommAdapterHolder commAdapterHolder, final int position) {
+        commAdapterHolder.swipeLayout.setShowMode(SwipeLayout.ShowMode.LayDown);
+        commAdapterHolder.title.setText(data.get(position).toString());
+        commAdapterHolder.botton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                remove(position);
+            public void onClick(View view) {
+                data.remove(position);
+                notifyDataSetChanged();
             }
         });
+    }
+
+    @Override
+    public int getItemCount() {
+        return data.size();
+    }
+
+    @Override
+    public int getSwipeLayoutResourceId(int position) {
+        return position;
+    }
+
+    public static class CommAdapterHolder extends RecyclerView.ViewHolder{
+        private SwipeLayout swipeLayout;
+        private Button botton;
+        private TextView title;
+        public CommAdapterHolder(View itemView) {
+            super(itemView);
+            swipeLayout=(SwipeLayout)itemView.findViewById(R.id.swipe_layout);
+            botton=(Button)itemView.findViewById(R.id.delete);
+            title=(TextView)itemView.findViewById(R.id.item_title);
+        }
     }
 }

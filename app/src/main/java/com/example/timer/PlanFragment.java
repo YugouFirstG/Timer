@@ -3,6 +3,7 @@ package com.example.timer;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -96,8 +97,9 @@ public class PlanFragment extends Fragment implements CalendarView.OnCalendarSel
         mCalenderView = view.findViewById(R.id.calendarView);
         mCalenderView.setOnCalendarSelectListener(this);
         mRecycleView = view.findViewById(R.id.recycle_list);
-        mRecycleView.setLayoutManager(new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL));
-        mRecycleView.setAdapter(new CommAdapter(this.getContext(), mData, mQuickSupport));
+//        mRecycleView.setLayoutManager(new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL));
+        mRecycleView.setLayoutManager(new LinearLayoutManager(this.getContext()));
+        mRecycleView.setAdapter(new CommAdapter(this.getContext(), mData));
     }
 
     @Override

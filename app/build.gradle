@@ -39,4 +39,5 @@ dependencies {
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
     implementation 'com.daimajia.numberprogressbar:library:1.4@aar'
     implementation 'com.flyco.tablayout:FlycoTabLayout_Lib:2.0.0@aar'
+    implementation 'com.daimajia.swipelayout:library:1.2.0@aar'
 }
