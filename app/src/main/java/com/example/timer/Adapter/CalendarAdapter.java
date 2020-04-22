@@ -9,6 +9,7 @@ import com.example.timer.Interfaces.QuickMultiSupport;
 import com.example.timer.R;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Description;
+import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
@@ -33,6 +34,11 @@ public class CalendarAdapter extends QuickAdapter<IViewType> {
 
         if (holder.getView(R.id.p_chart) != null) {
             pieChart = holder.getView(R.id.p_chart);
+            Legend l = pieChart.getLegend();
+            pieChart.animateXY(1400,1400);
+//            l.setVerticalAlignment(Legend.LegendVerticalAlignment.TOP);
+//            l.setHorizontalAlignment(Legend.LegendHorizontalAlignment.RIGHT);
+            l.setEnabled(false);
             drawDailyStatics(pieChart);
         }
     }
@@ -45,10 +51,10 @@ public class CalendarAdapter extends QuickAdapter<IViewType> {
             entryList.add(new PieEntry((i + 1) * 10f, "test " + i));
         }
         pieDataSet = new PieDataSet(entryList, "");
-        colors.add(Color.BLUE);
-        colors.add(Color.RED);
-        colors.add(Color.YELLOW);
-        colors.add(Color.GRAY);
+        colors.add(0xFF888888);
+        colors.add(0xFF888800);
+        colors.add(0xFF880088);
+        colors.add(0xFF008888);
         pieDataSet.setColors(colors);
 
         PieData pieData = new PieData(pieDataSet);
@@ -57,15 +63,16 @@ public class CalendarAdapter extends QuickAdapter<IViewType> {
         pieData.setValueTextColor(Color.CYAN);
         pieData.setValueTextSize(15f);
 
+
         Description description = new Description();
         description.setText("日统计");
-
+        description.setEnabled(false);
         pieChart.setDescription(description);
         pieChart.setRotationEnabled(false);
         pieChart.setHoleRadius(60f);
         pieChart.setHoleColor(Color.TRANSPARENT);
         pieChart.setTransparentCircleAlpha(0);
-        pieChart.setDrawEntryLabels(true);
+//        pieChart.setDrawEntryLabels(false);
         pieChart.setEntryLabelTextSize(25f);
         pieChart.setEntryLabelTypeface(Typeface.SANS_SERIF);
         pieChart.invalidate();

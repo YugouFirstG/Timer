@@ -3,11 +3,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#B9B3C1"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".PlanFragment">
 
     <com.haibin.calendarview.CalendarLayout
         android:layout_alignParentTop="true"
+
         android:id="@+id/calendarLayout1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -21,18 +23,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="#fff"
+            app:month_view="com.example.timer.Widget.MyMonthView"
+            app:week_view="com.example.timer.Widget.MyWeekView"
             app:current_month_text_color="#333333"
             app:current_month_lunar_text_color="#CFCFCF"
             app:min_year="2004"
-            app:max_year="2020"
+            app:max_year="2077"
             app:other_month_text_color="#e1e1e1"
-            app:other_month_lunar_text_color="#e1e1e1"
             app:scheme_text="假"
             app:scheme_text_color="#333"
-            app:scheme_theme_color="#128c4b"
-            app:selected_lunar_text_color="#CFCFCF"
             app:selected_text_color="#333"
-            app:selected_theme_color="#108cd4"
             app:week_background="#fff"
             app:week_text_color="#111"
             app:year_view_day_text_color="#333333"
@@ -47,6 +47,7 @@
 
         <androidx.core.widget.NestedScrollView
             android:id="@+id/nested"
+            android:background="#B9B3C1"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
@@ -56,7 +57,7 @@
                 android:layout_height="match_parent">
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:background="#FFFFFF"
+
                     android:id="@+id/recycle_list1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -66,6 +67,7 @@
                     android:id="@+id/bottom_card"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    app:cardCornerRadius="16dp"
                     app:cardBackgroundColor="#FFFFFF">
 
 
@@ -76,6 +78,7 @@
                         <com.google.android.material.tabs.TabLayout
                             android:id="@+id/tab"
                             android:layout_width="match_parent"
+                            app:tabIndicatorFullWidth="false"
                             android:layout_height="30dp" />
 
                         <androidx.recyclerview.widget.RecyclerView
