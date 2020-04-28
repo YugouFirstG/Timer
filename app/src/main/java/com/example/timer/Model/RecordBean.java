@@ -1,32 +1,36 @@
 package com.example.timer.Model;
 
-import com.example.timer.MainActivity;
+import com.example.timer.Interfaces.IViewType;
 
-public class RecordBean /*implements MainActivity.IViewType*/ {
+
+public class RecordBean implements IViewType {
     private String type;
     private String title;
     private String content;
     private String startTime;
     private int costTime;
+    private String endTime;
     private String date;
     private int id;
 
-    public RecordBean(String type, String title, String content, String startTime, int costTime, String date) {
+    public RecordBean(String type, String title, String content, String startTime, int costTime,String endTime, String date) {
         this.type = type;
         this.title = title;
         this.content = content;
         this.startTime = startTime;
         this.costTime = costTime;
         this.date = date;
+        this.endTime = endTime;
     }
 
-    public void updateData(String type, String title, String content, String startTime, int costTime, String date) {
+    public void updateData(String type, String title, String content, String startTime, int costTime,String endTime, String date) {
         this.type = type;
         this.title = title;
         this.content = content;
         this.startTime = startTime;
         this.costTime = costTime;
         this.date = date;
+        this.endTime = endTime;
     }
 
     public void setId(int id) {
@@ -61,7 +65,17 @@ public class RecordBean /*implements MainActivity.IViewType*/ {
         return date;
     }
 
-//    @Override
+    public String getEndTime() {
+        return endTime;
+    }
+
+    @Override
+    public int getItemType() {
+        return 1;
+    }
+
+
+    //    @Override
 //    public int getItemType() {
 //        return 0;
 //    }

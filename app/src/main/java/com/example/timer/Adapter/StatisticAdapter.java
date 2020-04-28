@@ -4,11 +4,13 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.view.View;
 import android.widget.TextView;
 
 import com.daimajia.numberprogressbar.NumberProgressBar;
 import com.example.timer.Interfaces.IViewType;
 import com.example.timer.Interfaces.QuickMultiSupport;
+import com.example.timer.Model.RecordBean;
 import com.example.timer.R;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Description;
@@ -23,6 +25,12 @@ import java.util.List;
 public class StatisticAdapter extends QuickAdapter<IViewType> {
 
     private NumberProgressBar progressBar;
+    private int dur = 1;
+
+    public void setDur(int dur) {
+        this.dur = dur;
+    }
+
     public StatisticAdapter(Context context, List<IViewType> data, int layoutId) {
         super(context, data, layoutId);
     }
@@ -31,25 +39,38 @@ public class StatisticAdapter extends QuickAdapter<IViewType> {
         super(context, data, support);
     }
 
-    @Override
-    protected void convert(QuickViewHolder holder, IViewType item, int position) {
-        switch (item.getItemType()) {
-            case 0:
+    public int getDur() {
+        return dur;
+    }
 
+    @Override
+    protected void convert(QuickViewHolder holder, IViewType item, final int position) {
+        switch (item.getItemType()) {
+            case 1:
                 if (holder.getView(R.id.item_head) != null) {
                     TextView tv = holder.getView(R.id.item_head);
                     TextView detail = holder.getView(R.id.detail);
-                    detail.setText("detail");
-                    tv.setText("Test");
-                    progressBar = holder.getView(R.id.item_progress);
+                    if(item instanceof RecordBean){
+                        detail.setText(((RecordBean) item).getCostTime()+"min");
+                        tv.setText(((RecordBean) item).getTitle());
+                        progressBar = holder.getView(R.id.item_progress);
+
+                        progressBar.setProgress(((RecordBean) item).getCostTime()*100/(24*dur*60));
+                    }
+
                 }
                 break;
-            case 1:
+            case 0:
                 break;
             default:
                 break;
         }
-
+        holder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                remove(position);
+            }
+        });
     }
 
     private void drawDailyStatics(PieChart pieChart) {

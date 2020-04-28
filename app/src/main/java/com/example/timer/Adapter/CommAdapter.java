@@ -38,7 +38,7 @@ public class CommAdapter extends RecyclerSwipeAdapter<CommAdapter.CommAdapterHol
     public void onBindViewHolder(CommAdapterHolder commAdapterHolder, final int position) {
         commAdapterHolder.swipeLayout.setShowMode(SwipeLayout.ShowMode.LayDown);
         commAdapterHolder.title.setText(data.get(position).toString());
-        commAdapterHolder.botton.setOnClickListener(new View.OnClickListener() {
+        commAdapterHolder.button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 data.remove(position);
@@ -57,15 +57,29 @@ public class CommAdapter extends RecyclerSwipeAdapter<CommAdapter.CommAdapterHol
         return position;
     }
 
-    public static class CommAdapterHolder extends RecyclerView.ViewHolder{
+    public static class CommAdapterHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private SwipeLayout swipeLayout;
-        private Button botton;
+        private Button button;
         private TextView title;
         public CommAdapterHolder(View itemView) {
             super(itemView);
             swipeLayout=(SwipeLayout)itemView.findViewById(R.id.swipe_layout);
-            botton=(Button)itemView.findViewById(R.id.delete);
+            swipeLayout.setSwipeEnabled(false);
+            swipeLayout.setOnClickListener(this);
+            button=(Button)itemView.findViewById(R.id.delete);
             title=(TextView)itemView.findViewById(R.id.item_title);
+        }
+
+        @Override
+        public void onClick(View v) {
+            if(v.getId()==R.id.swipe_layout){
+                if(swipeLayout.getOpenStatus()== SwipeLayout.Status.Close){
+                    swipeLayout.open(true);
+                }else {
+                    swipeLayout.close(true);
+                }
+
+            }
         }
     }
 }

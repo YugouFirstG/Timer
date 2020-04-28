@@ -1,5 +1,6 @@
 package com.example.timer;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 
 import androidx.appcompat.widget.Toolbar;
@@ -8,6 +9,7 @@ import androidx.viewpager.widget.ViewPager;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.MenuItem;
 
 import com.example.timer.Adapter.QuickFragmentPageAdapter;
 
@@ -102,6 +104,31 @@ public class MainActivity extends BaseActivity implements OnTabSelectListener {
         return true;
     }
 
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.week:
+                if(fragments.get(2) instanceof StatisticFragment){
+                    ((StatisticFragment) fragments.get(2)).setStatisticDuration(1);
+                }
+                break;
+            case R.id.day:
+                if(fragments.get(2) instanceof StatisticFragment){
+                    ((StatisticFragment) fragments.get(2)).setStatisticDuration(0);
+                }
+                break;
+            case R.id.mouth:
+                if(fragments.get(2) instanceof StatisticFragment){
+                    ((StatisticFragment) fragments.get(2)).setStatisticDuration(3);
+                }
+                break;
+            default:
+                break;
+        }
+
+        return true;
+    }
+
     @SuppressLint("RestrictedApi")
     @Override
     public void onTabSelect(int position) {
@@ -120,4 +147,5 @@ public class MainActivity extends BaseActivity implements OnTabSelectListener {
     public void onTabReselect(int position) {
 
     }
+
 }
