@@ -3,10 +3,13 @@ package com.example.timer;
 import android.content.ContentValues;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -54,6 +57,7 @@ public class StatisticFragment extends Fragment implements CalendarView.OnCalend
     private RecyclerView mRecycleView, statisticListView;
     private QuickMultiSupport<IViewType> mQuickSupport;
     private List<IViewType> mData = new ArrayList<>();
+    private List<IViewType> mSData = new ArrayList<>();
     private StatisticAdapter adapter;
     private CalendarAdapter calendarAdapter;
     private int statisticDuration;
@@ -91,11 +95,15 @@ public class StatisticFragment extends Fragment implements CalendarView.OnCalend
     }
 
     @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_statistic, container, false);
-//        mPieChart = new PieChart(getContext());
-//        drawDailyStatics();
         initFragment(view);
 
         return view;
@@ -103,6 +111,7 @@ public class StatisticFragment extends Fragment implements CalendarView.OnCalend
 
     private void initData(String[] date) {
         mData.clear();
+        mSData.clear();
 //        if(RecordsDao.getInstance(getContext()).select(" startDate=?",date,null).isEmpty()){
 //            for (int i = 0; i < 3; i++) {
 //                String title,startTime,endTime,dt,content,type;
@@ -128,8 +137,7 @@ public class StatisticFragment extends Fragment implements CalendarView.OnCalend
 //        }
 
 //        RecordsDao.getInstance(getContext()).dropTable();
-
-        mData.add(RecordsDao.getInstance(getContext()).getStatisticData(0,DateUtils.getCurrentDate()));
+        mSData.add(RecordsDao.getInstance(getContext()).getStatisticData(0,DateUtils.getCurrentDate()));
         if(RecordsDao.getInstance(getContext()).select("startDate=?",date,null).isEmpty()){
             mData.add(new RecordBean("type","无记录","content","00:00:00",0,"00:00:00",DateUtils.getCurrentDate()));
         }else {
@@ -179,8 +187,8 @@ public class StatisticFragment extends Fragment implements CalendarView.OnCalend
         statisticListView = view.findViewById(R.id.statistic_list);
         statisticListView.setLayoutManager(new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL));
         mRecycleView.setLayoutManager(new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL));
-        adapter = new StatisticAdapter(this.getContext(), mData.subList(1, mData.size()), mQuickSupport);
-        calendarAdapter = new CalendarAdapter(getContext(), mData.subList(0, 1), mQuickSupport);
+        adapter = new StatisticAdapter(this.getContext(), mData, mQuickSupport);
+        calendarAdapter = new CalendarAdapter(getContext(), mSData, mQuickSupport);
         mRecycleView.setAdapter(calendarAdapter);
         mRecycleView.setNestedScrollingEnabled(false);
         statisticListView.setNestedScrollingEnabled(false);
@@ -245,17 +253,17 @@ public class StatisticFragment extends Fragment implements CalendarView.OnCalend
                 String s = "";
                 TextView v = statisticListView.getChildAt(i).findViewById(R.id.detail);
 
-               if( mData.get(i+1) instanceof RecordBean){
+               if( mData.get(i) instanceof RecordBean){
 
-                    s =((RecordBean) mData.get(i+1)).getCostTime() * 100 / (24 *adapter.getDur()* 60) + "%";
+                    s =((RecordBean) mData.get(i)).getCostTime() * 100 / (24 *adapter.getDur()* 60) + "%";
                }
                 v.setText(s);
             }
         } else {
             for (int i = 0; i < statisticListView.getChildCount(); i++) {
                 String s = "";
-                if( mData.get(i+1) instanceof RecordBean){
-                    s =((RecordBean) mData.get(i+1)).getCostTime()+"min";
+                if( mData.get(i) instanceof RecordBean){
+                    s =((RecordBean) mData.get(i)).getCostTime()+"min";
                 }
                 TextView v = statisticListView.getChildAt(i).findViewById(R.id.detail);
                 v.setText(s);
@@ -279,4 +287,9 @@ public class StatisticFragment extends Fragment implements CalendarView.OnCalend
         tabLayout.selectTab(tabLayout.getTabAt(0));
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Log.d("Statistic","Destroy");
+    }
 }

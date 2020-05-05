@@ -1,11 +1,8 @@
 package com.example.timer.Widget;
 
-import android.content.ClipData;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
-
-import android.graphics.RectF;
 
 import com.haibin.calendarview.Calendar;
 import com.haibin.calendarview.WeekView;
@@ -39,7 +36,7 @@ public class MyWeekView extends WeekView {
     @Override
     protected boolean onDrawSelected(Canvas canvas, Calendar calendar, int x, boolean hasScheme) {
         mSelectedPaint.setStyle(Paint.Style.FILL);
-        mSelectedPaint.setColor(0x80cfcfcf);
+        mSelectedPaint.setColor(0xff6686ff);
         canvas.drawCircle(x+mItemWidth/2.f,mItemHeight/2.f,(mItemHeight-2*mPadding)/2.f,mSelectedPaint);
         return true;
     }
@@ -58,8 +55,11 @@ public class MyWeekView extends WeekView {
         int cx = x + mItemWidth / 2;
         int top = 0;
         if (isSelected) {
+            int c = mSelectTextPaint.getColor();
+            mSelectTextPaint.setColor(0xffffffff);
             canvas.drawText(String.valueOf(calendar.getDay()), cx, mTextBaseLine + top,
                     mSelectTextPaint);
+            mSelectTextPaint.setColor(c);
             //canvas.drawText(calendar.getLunar(), cx, mTextBaseLine + mItemHeight / 10, mSelectedLunarTextPaint);
         } else if (hasScheme) {
             canvas.drawText(String.valueOf(calendar.getDay()), cx, mTextBaseLine + top,

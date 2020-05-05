@@ -40,7 +40,7 @@ public class MyMonthView extends MonthView {
     @Override
     protected boolean onDrawSelected(Canvas canvas, Calendar calendar, int x, int y, boolean hasScheme) {
         mSelectedPaint.setStyle(Paint.Style.FILL);
-        mSelectedPaint.setColor(0x80cfcfcf);
+        mSelectedPaint.setColor(0xff6686ff);
         canvas.drawCircle(x+mItemWidth/2.f,y+mItemHeight/2.f,(mItemHeight-2*mPadding)/2.f,mSelectedPaint);
         return true;
     }
@@ -58,8 +58,11 @@ public class MyMonthView extends MonthView {
         int top = y;
 
         if (isSelected) {//优先绘制选择的
+            int s = mSelectTextPaint.getColor();
+            mSelectTextPaint.setColor(0xffffffff);
             canvas.drawText(String.valueOf(calendar.getDay()), cx, mTextBaseLine + top,
                     mSelectTextPaint);
+            mSelectTextPaint.setColor(s);
             //canvas.drawText(calendar.getLunar(), cx, mTextBaseLine + y + mItemHeight / 10, mSelectedLunarTextPaint);
         } else if (hasScheme) {//否则绘制具有标记的
             canvas.drawText(String.valueOf(calendar.getDay()), cx, mTextBaseLine + top,

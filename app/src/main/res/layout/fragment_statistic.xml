@@ -5,6 +5,7 @@
     android:layout_height="match_parent"
     android:background="#B9B3C1"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/statistic_page"
     tools:context=".PlanFragment">
 
     <com.haibin.calendarview.CalendarLayout
@@ -20,6 +21,7 @@
 
         <com.haibin.calendarview.CalendarView
             android:id="@+id/calendarView1"
+
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="#fff"
@@ -47,11 +49,12 @@
 
         <androidx.core.widget.NestedScrollView
             android:id="@+id/nested"
-            android:background="#B9B3C1"
+            android:background="#FFFFFF"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
             <LinearLayout
+                android:background="#B3FFFFFF"
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
@@ -61,14 +64,15 @@
                     android:id="@+id/recycle_list1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="16dp" />
+                    android:padding="16dp"
+                    />
 
                 <androidx.cardview.widget.CardView
                     android:id="@+id/bottom_card"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:cardCornerRadius="16dp"
-                    app:cardBackgroundColor="#FFFFFF">
+                    >
 
 
                     <RelativeLayout
@@ -79,9 +83,12 @@
                             android:id="@+id/tab"
                             android:layout_width="match_parent"
                             app:tabIndicatorFullWidth="false"
+                            app:tabSelectedTextColor="@color/iconSelected"
+                            app:tabIndicatorColor="@color/iconSelected"
                             android:layout_height="30dp" />
 
                         <androidx.recyclerview.widget.RecyclerView
+
                             android:layout_below="@id/tab"
                             android:id="@+id/statistic_list"
                             android:layout_width="match_parent"
@@ -93,5 +100,32 @@
 
     </com.haibin.calendarview.CalendarLayout>
 
-
+    <RelativeLayout
+        android:layout_margin="16dp"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/share"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/share"
+            android:backgroundTint="@color/bottomNav"
+            app:borderWidth="0dp"
+            tools:targetApi="lollipop" />
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/save"
+            app:borderWidth="0dp"
+            android:layout_toRightOf="@id/share"
+            android:layout_marginLeft="76dp"
+            android:layout_width="wrap_content"
+            android:src="@mipmap/save"
+            android:backgroundTint="@color/bottomNav"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/share"
+            android:layout_marginStart="76dp"
+            tools:targetApi="lollipop" />
+    </RelativeLayout>
+    
 </RelativeLayout>

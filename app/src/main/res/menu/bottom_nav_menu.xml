@@ -2,11 +2,14 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/bottom_nav_plan"
+        android:icon="@mipmap/plan_unsel"
         android:title="@string/bottom_nav_plan" />
     <item
         android:id="@+id/bottom_nav_habit"
+        android:icon="@mipmap/habit_unsel"
         android:title="@string/bottom_nav_habit" />
     <item
         android:id="@+id/bottom_nav_statistic"
+        android:icon="@mipmap/count_unsel"
         android:title="@string/bottom_nav_statistic" />
 </menu>

@@ -10,7 +10,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".RecordActivity"></activity>
-        <activity android:name=".ListExampleActivity" />
         <activity android:name=".GoalAddActivity" />
         <activity android:name=".BaseActivity"
             android:configChanges="uiMode"/>

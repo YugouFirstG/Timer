@@ -35,7 +35,7 @@ public class CalendarAdapter extends QuickAdapter<IViewType> {
         if (holder.getView(R.id.p_chart) != null) {
             pieChart = holder.getView(R.id.p_chart);
             Legend l = pieChart.getLegend();
-            pieChart.animateXY(1400,1400);
+            pieChart.animateXY(2000,2000);
 //            l.setVerticalAlignment(Legend.LegendVerticalAlignment.TOP);
 //            l.setHorizontalAlignment(Legend.LegendHorizontalAlignment.RIGHT);
             l.setEnabled(false);
@@ -69,12 +69,12 @@ public class CalendarAdapter extends QuickAdapter<IViewType> {
         description.setEnabled(false);
         pieChart.setDescription(description);
         pieChart.setRotationEnabled(false);
-        pieChart.setHoleRadius(60f);
+        pieChart.setHoleRadius(70f);
         pieChart.setHoleColor(Color.TRANSPARENT);
         pieChart.setTransparentCircleAlpha(0);
-//        pieChart.setDrawEntryLabels(false);
-        pieChart.setEntryLabelTextSize(25f);
-        pieChart.setEntryLabelTypeface(Typeface.SANS_SERIF);
+        pieChart.setDrawEntryLabels(false);
+//        pieChart.setEntryLabelTextSize(25f);
+//        pieChart.setEntryLabelTypeface(Typeface.SANS_SERIF);
         pieChart.invalidate();
     }
 
