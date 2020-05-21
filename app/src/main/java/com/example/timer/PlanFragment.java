@@ -129,7 +129,7 @@ public class PlanFragment extends Fragment implements CalendarView.OnCalendarSel
             @Override
             public int getLayoutId(IViewType data) {
                 if (data instanceof MultiBean) {
-                    return R.layout.item_habit;
+                    return R.layout.item_plan;
                 }
 
                 return 0;

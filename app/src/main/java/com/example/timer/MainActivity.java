@@ -51,10 +51,9 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         if(savedInstanceState!=null){
             menuPosition = savedInstanceState.getInt("position",0);
         }
-
-        initViews();
         Calendar calendar = Calendar.getInstance();
         mMouth = (calendar.get(Calendar.MONTH));
+        initViews();
     }
 
 //
@@ -95,7 +94,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         bottomNavigationView = findViewById(R.id.bottom_nav);
         bottomNavigationView.setOnNavigationItemSelectedListener(this);
         setSupportActionBar(mToolbar);
-        getSupportActionBar().setTitle("计划");
+        getSupportActionBar().setTitle(mouth[mMouth]+"");
         ActionBar actionBar = getSupportActionBar();
 
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
@@ -206,17 +205,14 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         }
         menuPosition = position;
         if (position==0){
-            getSupportActionBar().setTitle("计划");
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.fragment_ce,new PlanFragment());
             fragmentTransaction.commit();
         }else if(position==1){
-            getSupportActionBar().setTitle("习惯");
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.fragment_ce,new HabitFragment());
             fragmentTransaction.commit();
         }else {
-            getSupportActionBar().setTitle(mouth[mMouth]+"");
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.fragment_ce,new StatisticFragment());
             fragmentTransaction.commit();
