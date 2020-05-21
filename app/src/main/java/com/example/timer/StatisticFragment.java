@@ -23,6 +23,8 @@ import com.example.timer.Interfaces.IViewType;
 import com.example.timer.Interfaces.QuickMultiSupport;
 
 import com.example.timer.Model.RecordBean;
+import com.example.timer.Model.SimpleInfo;
+import com.example.timer.Model.StatisticBean;
 import com.example.timer.Utils.DateUtils;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.utils.Utils;
@@ -32,6 +34,7 @@ import com.haibin.calendarview.CalendarLayout;
 import com.haibin.calendarview.CalendarView;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 
@@ -52,6 +55,7 @@ public class StatisticFragment extends Fragment implements CalendarView.OnCalend
 
     private CalendarLayout calendarLayout;
     private TabLayout tabLayout;
+    private TabLayout.Tab tab1,tab2;
     private PieChart mPieChart;
     private CalendarView mCalenderView;
     private RecyclerView mRecycleView, statisticListView;
@@ -110,19 +114,18 @@ public class StatisticFragment extends Fragment implements CalendarView.OnCalend
     }
 
     private void initData(String[] date) {
-        mData.clear();
-        mSData.clear();
-//        if(RecordsDao.getInstance(getContext()).select(" startDate=?",date,null).isEmpty()){
-//            for (int i = 0; i < 3; i++) {
+        statisticDuration = 0;
+//        if(true){
+//            for (int i = 0; i < 1; i++) {
 //                String title,startTime,endTime,dt,content,type;
 //                int costTime;
 //                title = "test"+i;
 //                startTime = DateUtils.getCurrentTime();
 //                endTime = DateUtils.getForMatedTime(22,12,0);
-//                costTime = 240;
+//                costTime = 3600*1;
 //                dt = date[0];
 //                content = "content";
-//                type = "学习";
+//                type = "运动";
 //
 //                ContentValues values = new ContentValues();
 //                values.put("title",title);
@@ -137,21 +140,24 @@ public class StatisticFragment extends Fragment implements CalendarView.OnCalend
 //        }
 
 //        RecordsDao.getInstance(getContext()).dropTable();
-        mSData.add(RecordsDao.getInstance(getContext()).getStatisticData(0,DateUtils.getCurrentDate()));
-        if(RecordsDao.getInstance(getContext()).select("startDate=?",date,null).isEmpty()){
-            mData.add(new RecordBean("type","无记录","content","00:00:00",0,"00:00:00",DateUtils.getCurrentDate()));
-        }else {
-            mData.addAll(RecordsDao.getInstance(getContext()).select("startDate=?",date,null));
-        }
+        StatisticBean statisticBean =RecordsDao.getInstance(getContext()).getStatisticData(1,DateUtils.getCurrentDate(),DateUtils.getCurrentDate());
+        mSData.add(statisticBean);
+
+
+
+            mData.addAll(statisticBean.getList());
+
 
     }
 
     private void initFragment(View view) {
-        String[] s = {"2020-04-28"};
+        String[] s = {DateUtils.getCurrentDate()};
         initData(s);
         tabLayout = view.findViewById(R.id.tab);
-        tabLayout.addTab(tabLayout.newTab().setText("时间"));
-        tabLayout.addTab(tabLayout.newTab().setText("百分比"));
+        tab1=tabLayout.newTab().setText("时间");
+        tab2=tabLayout.newTab().setText("百分比");
+        tabLayout.addTab(tab1);
+        tabLayout.addTab(tab2);
         tabLayout.addOnTabSelectedListener(this);
 
         mQuickSupport = new QuickMultiSupport<IViewType>() {
@@ -162,7 +168,7 @@ public class StatisticFragment extends Fragment implements CalendarView.OnCalend
 
             @Override
             public int getLayoutId(IViewType data) {
-                if (data instanceof RecordBean) {
+                if (data instanceof SimpleInfo) {
                     return R.layout.item_theme;
                 }else {
                     return R.layout.item_piechart;
@@ -193,29 +199,43 @@ public class StatisticFragment extends Fragment implements CalendarView.OnCalend
         mRecycleView.setNestedScrollingEnabled(false);
         statisticListView.setNestedScrollingEnabled(false);
         statisticListView.setAdapter(adapter);
+        calendarAdapter.notifyData();
     }
 
-    private void reFreshView(String[] s, int week){
+    private void reFreshView(String[] s, int dur){
         adapter.clear();
+        calendarAdapter.clear();
+
+        StatisticBean statisticBean;
         List<IViewType> ls = new ArrayList<>();
-        if(statisticDuration==1){
-            adapter.setDur(7);
-            ls.addAll(RecordsDao.getInstance(getContext()).select("startDate between ? and ?",s,null));
-        }else if(statisticDuration ==0){
-            adapter.setDur(1);
-            ls.addAll(RecordsDao.getInstance(getContext()).select("startDate=?",s,null));
+        if(statisticDuration==0){
+            statisticBean =RecordsDao.getInstance(getContext()).getStatisticData(dur,
+                    s[0],s[0]);
+            ls.addAll(statisticBean.getList());
+
+//            ls.addAll(RecordsDao.getInstance(getContext()).select("startDate between ? and ?",s,null));
+        }else if(statisticDuration ==1){
+            statisticBean =RecordsDao.getInstance(getContext()).getStatisticData(dur,
+                    s[0],s[1]);
+            ls.addAll(statisticBean.getList());
+//            ls.addAll(RecordsDao.getInstance(getContext()).select("startDate=?",s,null));
         }else{
-            adapter.setDur(30);
-            ls.addAll(RecordsDao.getInstance(getContext()).select("startDate between ? and ?",s,null));
+             statisticBean =RecordsDao.getInstance(getContext()).getStatisticData(dur,
+                    s[0],s[1]);
+            ls.addAll(statisticBean.getList());
+//            ls.addAll(RecordsDao.getInstance(getContext()).select("startDate between ? and ?",s,null));
         }
+        calendarAdapter.add(statisticBean);
+//        if(ls.isEmpty()){
+//            adapter.add(new RecordBean("type","无记录","content","00:00:00",0,"00:00:00",s[0]));
+//        }else {
+//            adapter.addAll(ls);
+//        }
 
-        if(ls.isEmpty()){
-            adapter.add(new RecordBean("type","无记录","content","00:00:00",0,"00:00:00",s[0]));
-        }else {
-            adapter.addAll(ls);
-        }
-
+        adapter.addAll(ls);
+        adapter.setDur(dur);
         adapter.notifyData();
+        calendarAdapter.notifyData();
         //        mData.add(RecordsDao.getInstance(getContext()).getStatisticData(0,DateUtils.getCurrentDate()));
     }
 
@@ -231,17 +251,23 @@ public class StatisticFragment extends Fragment implements CalendarView.OnCalend
         month = calendar.getMonth();
         day = calendar.getDay();
         int w = calendar.getWeek();
+        int dur;
         String[] s;
         if(statisticDuration==1){
              s= new String[]{DateUtils.getForMatedDate(year, month - 1, day - w), DateUtils.getForMatedDate(year, month - 1, day +7- w)};
+             dur = 7;
         }else if(statisticDuration == 0){
             s = new String[]{DateUtils.getForMatedDate(year, month - 1, day)};
+            dur=1;
         }else {
             s= new String[]{DateUtils.getForMatedDate(year, month - 1, 1), DateUtils.getForMatedDate(year, month , 0)};
+            dur = DateUtils.getOffsetDays(year,month-1,1,year,month,0);
         }
 
 
-        reFreshView(s,w);
+        reFreshView(s,dur);
+        tabLayout.selectTab(tabLayout.getTabAt(0),true);
+
         //TODO 调用查询函数刷新列表
     }
 
@@ -249,26 +275,29 @@ public class StatisticFragment extends Fragment implements CalendarView.OnCalend
     public void onTabSelected(TabLayout.Tab tab) {
 
         if (tab.getPosition() == 1) {
-            for (int i = 0; i < statisticListView.getChildCount(); i++) {
+            for (int i = 0; i < adapter.getCount(); i++) {
                 String s = "";
                 TextView v = statisticListView.getChildAt(i).findViewById(R.id.detail);
 
-               if( mData.get(i) instanceof RecordBean){
+               if( mData.get(i) instanceof SimpleInfo){
 
-                    s =((RecordBean) mData.get(i)).getCostTime() * 100 / (24 *adapter.getDur()* 60) + "%";
+                    s =((SimpleInfo) mData.get(i)).getTime() * 100 / (24 *adapter.getDur()* 3600) + "%";
                }
                 v.setText(s);
             }
         } else {
-            for (int i = 0; i < statisticListView.getChildCount(); i++) {
+            for (int i = 0; i <statisticListView.getChildCount(); i++) {
                 String s = "";
-                if( mData.get(i) instanceof RecordBean){
-                    s =((RecordBean) mData.get(i)).getCostTime()+"min";
+                if(i==mData.size())
+                    break;
+                if( mData.get(i) instanceof SimpleInfo){
+                    s = DateUtils.getFormatTimeFromSeconds(((SimpleInfo) mData.get(i)).getTime());
                 }
                 TextView v = statisticListView.getChildAt(i).findViewById(R.id.detail);
                 v.setText(s);
             }
         }
+
     }
 
     @Override
@@ -278,7 +307,7 @@ public class StatisticFragment extends Fragment implements CalendarView.OnCalend
 
     @Override
     public void onTabReselected(TabLayout.Tab tab) {
-
+       // onTabSelected(tab);
     }
 
     public void setStatisticDuration(int t){

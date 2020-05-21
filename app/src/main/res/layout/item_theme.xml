@@ -39,7 +39,7 @@
             app:progress_text_size="10sp"
             app:progress_text_visibility="invisible"
             app:progress_unreached_bar_height="20dp"
-            app:progress_unreached_color="#CCCCCC" />
+            app:progress_unreached_color="@color/transparent" />
 
         <TextView
             android:id="@+id/detail"
@@ -48,7 +48,7 @@
             android:layout_gravity="center_horizontal|center_vertical"
             android:text="@string/app_name"
             android:textSize="14sp"
-            android:textColor="#FBFAFF" />
+            android:textColor="#26242B" />
     </androidx.cardview.widget.CardView>
 
 

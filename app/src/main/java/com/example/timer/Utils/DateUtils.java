@@ -1,10 +1,15 @@
 package com.example.timer.Utils;
 
+import android.provider.ContactsContract;
+
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
 import javax.xml.datatype.Duration;
+
+import static android.icu.text.DateTimePatternGenerator.DAY;
 
 public class DateUtils {
 
@@ -36,6 +41,33 @@ public class DateUtils {
 
 
 
+
         return null;
+     }
+
+     public static int  getOffsetDays(int y1,int m1,int day1,int y2,int m2, int day2){
+         Date d =new  Date(y2-1900,m2,day2);
+         int offset = Integer.parseInt((new SimpleDateFormat("yyyy-MM-dd", Locale.CHINESE).format(d)).substring(8));
+
+         return  offset;
+     }
+
+     public static String getFormatTimeFromSeconds(int sec){
+         int hour,min,second;
+         hour = (sec-sec %3600)/3600;
+         sec = sec - hour *3600;
+         min  = (sec -sec % 60)/60;
+         second = sec % 60;
+
+         String s,h=""+hour,m=""+min,se=""+second;
+         if(hour<10)
+             h = "0"+hour;
+         if(min<10)
+             m = "0"+min;
+         if(second<10)
+             se = "0"+second;
+
+         s = h+"h "+m+"m "+se+"s";
+         return s;
      }
 }

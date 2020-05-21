@@ -6,6 +6,8 @@ import android.graphics.Typeface;
 
 import com.example.timer.Interfaces.IViewType;
 import com.example.timer.Interfaces.QuickMultiSupport;
+import com.example.timer.Model.SimpleInfo;
+import com.example.timer.Model.StatisticBean;
 import com.example.timer.R;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Description;
@@ -20,6 +22,11 @@ import java.util.List;
 
 public class CalendarAdapter extends QuickAdapter<IViewType> {
     private PieChart pieChart;
+    private int dur = 1;
+
+    public void setDur(int dur) {
+        this.dur = dur;
+    }
 
     public CalendarAdapter(Context context, List<IViewType> data, int layoutId) {
         super(context, data, layoutId);
@@ -28,6 +35,9 @@ public class CalendarAdapter extends QuickAdapter<IViewType> {
     public CalendarAdapter(Context context, List<IViewType> data, QuickMultiSupport<IViewType> support) {
         super(context, data, support);
     }
+    public int getDur() {
+        return dur;
+    }
 
     @Override
     protected void convert(QuickViewHolder holder, IViewType item, int position) {
@@ -35,7 +45,7 @@ public class CalendarAdapter extends QuickAdapter<IViewType> {
         if (holder.getView(R.id.p_chart) != null) {
             pieChart = holder.getView(R.id.p_chart);
             Legend l = pieChart.getLegend();
-            pieChart.animateXY(2000,2000);
+            pieChart.animateXY(1000,1000);
 //            l.setVerticalAlignment(Legend.LegendVerticalAlignment.TOP);
 //            l.setHorizontalAlignment(Legend.LegendHorizontalAlignment.RIGHT);
             l.setEnabled(false);
@@ -47,20 +57,24 @@ public class CalendarAdapter extends QuickAdapter<IViewType> {
         List<PieEntry> entryList = new ArrayList<>();
         PieDataSet pieDataSet;
         List<Integer> colors = new ArrayList<>();
-        for (int i = 0; i < 4; i++) {
-            entryList.add(new PieEntry((i + 1) * 10f, "test " + i));
+
+        if(getData().get(0) instanceof StatisticBean){
+            StatisticBean statisticBean = (StatisticBean) getData().get(0);
+            for (int i = 0; i < statisticBean.getTypes(); i++) {
+                SimpleInfo s = statisticBean.getList().get(i);
+                entryList.add(new PieEntry(s.getTime()*1.0f/(dur*24*3600)*100, s.getType()));
+                colors.add(s.getColor());
+            }
         }
+
+
         pieDataSet = new PieDataSet(entryList, "");
-        colors.add(0xFF888888);
-        colors.add(0xFF888800);
-        colors.add(0xFF880088);
-        colors.add(0xFF008888);
+
         pieDataSet.setColors(colors);
 
         PieData pieData = new PieData(pieDataSet);
         pieChart.setData(pieData);
         pieData.setValueFormatter(new PercentFormatter());
-        pieData.setValueTextColor(Color.CYAN);
         pieData.setValueTextSize(15f);
 
 

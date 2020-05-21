@@ -11,15 +11,10 @@ import com.daimajia.numberprogressbar.NumberProgressBar;
 import com.example.timer.Interfaces.IViewType;
 import com.example.timer.Interfaces.QuickMultiSupport;
 import com.example.timer.Model.RecordBean;
+import com.example.timer.Model.SimpleInfo;
 import com.example.timer.R;
-import com.github.mikephil.charting.charts.PieChart;
-import com.github.mikephil.charting.components.Description;
-import com.github.mikephil.charting.data.PieData;
-import com.github.mikephil.charting.data.PieDataSet;
-import com.github.mikephil.charting.data.PieEntry;
-import com.github.mikephil.charting.formatter.PercentFormatter;
+import com.example.timer.Utils.DateUtils;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class StatisticAdapter extends QuickAdapter<IViewType> {
@@ -45,17 +40,18 @@ public class StatisticAdapter extends QuickAdapter<IViewType> {
 
     @Override
     protected void convert(QuickViewHolder holder, IViewType item, final int position) {
+        int t = item.getItemType();
         switch (item.getItemType()) {
-            case 1:
+            case 5:
                 if (holder.getView(R.id.item_head) != null) {
                     TextView tv = holder.getView(R.id.item_head);
                     TextView detail = holder.getView(R.id.detail);
-                    if(item instanceof RecordBean){
-                        detail.setText(((RecordBean) item).getCostTime()+"min");
-                        tv.setText(((RecordBean) item).getTitle());
+                    if(item instanceof SimpleInfo){
+                        tv.setText(((SimpleInfo) item).getType());
+                        detail.setText(DateUtils.getFormatTimeFromSeconds(((SimpleInfo) item).getTime()));
                         progressBar = holder.getView(R.id.item_progress);
-
-                        progressBar.setProgress(((RecordBean) item).getCostTime()*100/(24*dur*60));
+                        progressBar.setReachedBarColor(((SimpleInfo) item).getColor());
+                        progressBar.setProgress(((SimpleInfo) item).getTime()*100/(24*dur*3600));
                     }
 
                 }
@@ -73,45 +69,4 @@ public class StatisticAdapter extends QuickAdapter<IViewType> {
         });
     }
 
-    private void drawDailyStatics(PieChart pieChart) {
-        List<PieEntry> entryList = new ArrayList<>();
-        PieDataSet pieDataSet;
-        List<Integer> colors = new ArrayList<>();
-        for (int i = 0; i < 4; i++) {
-            entryList.add(new PieEntry((i + 1) * 10f, "test " + i));
-        }
-        pieDataSet = new PieDataSet(entryList, "");
-        colors.add(Color.BLUE);
-        colors.add(Color.RED);
-        colors.add(Color.YELLOW);
-        colors.add(Color.GRAY);
-        pieDataSet.setColors(colors);
-
-        PieData pieData = new PieData(pieDataSet);
-        pieChart.setData(pieData);
-        pieData.setValueFormatter(new PercentFormatter());
-        pieData.setValueTextColor(Color.CYAN);
-        pieData.setValueTextSize(15f);
-
-        Description description = new Description();
-        description.setText("日统计");
-
-        pieChart.setDescription(description);
-        pieChart.setRotationEnabled(false);
-        pieChart.setHoleRadius(60f);
-        pieChart.setHoleColor(Color.TRANSPARENT);
-        pieChart.setTransparentCircleAlpha(0);
-        pieChart.setDrawEntryLabels(true);
-        pieChart.setEntryLabelTextSize(25f);
-        pieChart.setEntryLabelTypeface(Typeface.SANS_SERIF);
-        pieChart.invalidate();
-    }
-
-    private void drawMonthStatics() {
-
-    }
-
-    private void drawWeekStatics() {
-
-    }
 }

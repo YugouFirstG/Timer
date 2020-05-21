@@ -11,16 +11,21 @@ import com.example.timer.Interfaces.IViewType;
 import com.example.timer.Interfaces.Modify;
 
 import com.example.timer.Model.RecordBean;
+import com.example.timer.Model.SimpleInfo;
 import com.example.timer.Model.StatisticBean;
+import com.example.timer.Utils.SheetColors;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.example.timer.Utils.SheetColors.colors;
 
 public class RecordsDao implements Modify {
     private static RecordsDao INSTANCE = null;
     private DatabaseHelper mHelper = null;
     private SQLiteDatabase mDB = null;
     final static String TABLE_NAME = "record";
+
 
     private RecordsDao(Context context) {
         mHelper = new DatabaseHelper(context, "timer_db", null, 1);
@@ -44,15 +49,16 @@ public class RecordsDao implements Modify {
         return INSTANCE;
     }
 
-    public StatisticBean getStatisticData(int dur,String date){
+    public StatisticBean getStatisticData(int dur,String startDate,String endDate){
         int total = 0;
-        String[] col = {"sum(costTime)",date},dt={date};
+        List<SimpleInfo> ls = new ArrayList<>();
+        String[] col = {"sum(costTime)","type"},dt={startDate,endDate};
         Cursor cursor = mDB.query(
                 TABLE_NAME,
                 col,
-                "startDate=?",
+                "startDate between ? and ?",
                 dt,
-                null,
+                "type",
                 null,
                 null,
                 null
@@ -60,10 +66,21 @@ public class RecordsDao implements Modify {
         if(cursor.getCount()>0){
             String[] s = cursor.getColumnNames();
             cursor.moveToFirst();
-            total = cursor.getInt(0);;
+            ls.add(new SimpleInfo(
+                    cursor.getString(cursor.getColumnIndex("type")),
+                    cursor.getInt(0), colors[cursor.getPosition()]));
+            while (cursor.moveToNext()){
+                ls.add(new SimpleInfo(
+                        cursor.getString(
+                        cursor.getColumnIndex("type")),
+                        cursor.getInt(0),colors[cursor.getPosition()]));
+            }
+        }
+        for(int i=0;i<ls.size();i++){
+            total+=ls.get(i).getTime();
         }
         cursor.close();
-        return new StatisticBean(total,date);
+        return new StatisticBean(startDate,ls,dur,total);
     }
 
     public List<RecordBean> select(String selection,String[] selectionArgs,String group){
