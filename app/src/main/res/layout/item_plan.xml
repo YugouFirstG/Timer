@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.daimajia.swipe.SwipeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="80dp"
+    android:paddingTop="8dp"
+    android:id="@+id/swipe_layout"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <ImageButton
+            android:layout_toRightOf="@+id/save"
+            android:id="@+id/delete"
+            android:layout_marginRight="8dp"
+            android:layout_width="80dp"
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
+            android:background="@drawable/bg_plan_delete"
+            android:src="@mipmap/delete"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@drawable/bg_plan_text">
+        <androidx.cardview.widget.CardView
+            android:id="@+id/item_card"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            app:cardBackgroundColor="#EBEDF2">
+
+            <TextView
+                android:padding="4dp"
+                android:id="@+id/item_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16dp" />
+
+            <TextView
+                android:padding="4dp"
+                android:id="@+id/item_theme"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:textSize="12dp" />
+
+            <TextView
+                android:padding="4dp"
+                android:textSize="12dp"
+                android:id="@+id/notification_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom" />
+
+            <Button
+                android:layout_gravity="end|top"
+                android:id="@+id/card_bottom"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginRight="16dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@mipmap/bg_buttom"
+                android:text="开始"
+                android:textColor="#6686FF"
+                android:textSize="12dp"/>
+
+            <CheckBox
+                android:id="@+id/checkbox"
+                android:layout_gravity="end|center_vertical"
+                android:layout_marginRight="16dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@mipmap/checkbox_unsel"
+                android:visibility="gone"/>
+        </androidx.cardview.widget.CardView>
+
+        <ImageView
+            android:id="@+id/item_tag"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            app:layout_constraintEnd_toEndOf="@id/item_card"
+            android:layout_gravity="end|top"
+            android:elevation="18dp"
+            android:background="@color/colorPrimary"
+            tools:ignore="MissingConstraints" />
+    </RelativeLayout>
+
+</com.daimajia.swipe.SwipeLayout>
