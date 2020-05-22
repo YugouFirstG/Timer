@@ -1,6 +1,7 @@
 package com.example.timer;
 
 import android.content.ContentValues;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -28,6 +29,7 @@ import com.example.timer.Model.StatisticBean;
 import com.example.timer.Utils.DateUtils;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.utils.Utils;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 import com.haibin.calendarview.Calendar;
 import com.haibin.calendarview.CalendarLayout;
@@ -43,7 +45,7 @@ import java.util.List;
  * Use the {@link StatisticFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class StatisticFragment extends Fragment implements CalendarView.OnCalendarSelectListener, TabLayout.OnTabSelectedListener {
+public class StatisticFragment extends Fragment implements CalendarView.OnCalendarSelectListener, TabLayout.OnTabSelectedListener, View.OnClickListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -153,13 +155,14 @@ public class StatisticFragment extends Fragment implements CalendarView.OnCalend
     private void initFragment(View view) {
         String[] s = {DateUtils.getCurrentDate()};
         initData(s);
+        FloatingActionButton fb1 = view.findViewById(R.id.share);
+        fb1.setOnClickListener(this);
         tabLayout = view.findViewById(R.id.tab);
         tab1=tabLayout.newTab().setText("时间");
         tab2=tabLayout.newTab().setText("百分比");
         tabLayout.addTab(tab1);
         tabLayout.addTab(tab2);
         tabLayout.addOnTabSelectedListener(this);
-
         mQuickSupport = new QuickMultiSupport<IViewType>() {
             @Override
             public int getViewTypeCount() {
@@ -320,5 +323,18 @@ public class StatisticFragment extends Fragment implements CalendarView.OnCalend
     public void onDestroy() {
         super.onDestroy();
         Log.d("Statistic","Destroy");
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.share:
+                Intent intent = new Intent(getContext(),RecordActivity.class);
+                startActivity(intent);
+                break;
+            default:
+                break;
+
+        }
     }
 }
