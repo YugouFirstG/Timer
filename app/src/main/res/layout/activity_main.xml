@@ -22,7 +22,7 @@
                 android:layout_height="?attr/actionBarSize"
                 android:background="@color/colorAccent"
                 android:theme="@style/AppTheme"
-                app:titleTextColor="#DFF3E0" />
+                app:titleTextColor="@color/colorText" />
 
         </com.google.android.material.appbar.AppBarLayout>
 
@@ -36,7 +36,23 @@
             app:layout_anchorGravity="center">
         </androidx.fragment.app.FragmentContainerView>
 
-
+        <com.example.timer.Widget.FloatingActionButton
+            android:id="@+id/floating_button"
+            android:layout_gravity="end|bottom"
+            android:layout_above="@id/bottom_nav"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="80dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginRight="20dp"
+            android:src="@mipmap/add_float"
+            app:borderWidth="0dp"
+            app:pressedTranslationZ="4dp"
+            app:rippleColor="#FF9E9E9E"
+            android:backgroundTint="#6686FF"
+            tools:ignore="MissingConstraints" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

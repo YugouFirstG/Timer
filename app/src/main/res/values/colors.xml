@@ -2,9 +2,13 @@
 <resources>
     <color name="colorPrimary">#6200EE</color>
     <color name="colorPrimaryDark">#3700B3</color>
-    <color name="colorAccent">#03DAC5</color>
+    <color name="colorAccent">#FFFFFF</color>
     <color name="iconSelected">#6686FF</color>
     <color name="iconUnSelected">#ffebedf2</color>
     <color name="bottomNav">#ffffffff</color>
     <color name="transparent">#00FFFFFF</color>
+    <color name="colorText">#000000</color>
+    <color name="colorCalendar">#FAFAFA</color>
+    <color name="colorWhite">#FFFFFF</color>
+    <color name="colorRed">#E65F45</color>
 </resources>

@@ -3,10 +3,20 @@ package com.example.timer;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.example.timer.Adapter.HabitAdapter;
+import com.example.timer.Interfaces.IViewType;
+import com.example.timer.Interfaces.QuickMultiSupport;
+import com.example.timer.Model.MultiBean;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -23,6 +33,10 @@ public class HabitFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    private RecyclerView mRecycleView;
+    private List<IViewType> mData = new ArrayList<>();
+    private QuickMultiSupport<IViewType> mQuickSupport;
 
     public HabitFragment() {
         // Required empty public constructor
@@ -59,6 +73,50 @@ public class HabitFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_habit, container, false);
+        View view = inflater.inflate(R.layout.fragment_habit, container, false);
+        initFragment(view);
+        return view;
+    }
+
+    private void initFragment(View view) {
+        initData();
+        mRecycleView = view.findViewById(R.id.recycle_list2);
+        mRecycleView.setLayoutManager(new LinearLayoutManager(this.getContext()));
+        mRecycleView.setAdapter(new HabitAdapter(this.getContext(), mData));
+    }
+
+    private void initData() {
+        mData.clear();
+        for (int i = 0; i < 199; i++) {
+            MultiBean bean = new MultiBean();
+            bean.name = "mData----" + i;
+            mData.add(bean);
+        }
+        mQuickSupport = new QuickMultiSupport<IViewType>() {
+            @Override
+            public int getViewTypeCount() {
+                return 0;
+            }
+
+            @Override
+            public int getLayoutId(IViewType data) {
+                if (data instanceof MultiBean) {
+                    return R.layout.item_habit;
+                }
+
+                return 0;
+            }
+
+            @Override
+            public int getItemViewType(IViewType data) {
+                return 0;
+            }
+
+            @Override
+            public boolean isSpan(IViewType data) {
+                return false;
+            }
+        };
+
     }
 }

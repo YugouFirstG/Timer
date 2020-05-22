@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
@@ -30,7 +31,7 @@ public class CommAdapter extends RecyclerSwipeAdapter<CommAdapter.CommAdapterHol
 
     @Override
     public CommAdapterHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_habit, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_plan, parent, false);
         return new CommAdapterHolder(view);
     }
 
@@ -38,7 +39,7 @@ public class CommAdapter extends RecyclerSwipeAdapter<CommAdapter.CommAdapterHol
     public void onBindViewHolder(CommAdapterHolder commAdapterHolder, final int position) {
         commAdapterHolder.swipeLayout.setShowMode(SwipeLayout.ShowMode.LayDown);
         commAdapterHolder.title.setText(data.get(position).toString());
-        commAdapterHolder.button.setOnClickListener(new View.OnClickListener() {
+        commAdapterHolder.imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 data.remove(position);
@@ -59,14 +60,14 @@ public class CommAdapter extends RecyclerSwipeAdapter<CommAdapter.CommAdapterHol
 
     public static class CommAdapterHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private SwipeLayout swipeLayout;
-        private Button button;
+        private ImageButton imageButton;
         private TextView title;
         public CommAdapterHolder(View itemView) {
             super(itemView);
             swipeLayout=(SwipeLayout)itemView.findViewById(R.id.swipe_layout);
             swipeLayout.setSwipeEnabled(false);
             swipeLayout.setOnClickListener(this);
-            button=(Button)itemView.findViewById(R.id.delete);
+            imageButton=(ImageButton)itemView.findViewById(R.id.delete);
             title=(TextView)itemView.findViewById(R.id.item_title);
         }
 

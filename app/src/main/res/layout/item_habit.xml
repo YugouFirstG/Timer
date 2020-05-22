@@ -1,52 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.daimajia.swipe.SwipeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="80dp"
     android:paddingTop="8dp"
-    android:id="@+id/swipe_layout"
+    android:id="@+id/habit_layout"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent">
-        <Button
-            android:layout_gravity="end|top"
-            android:id="@+id/delete"
-            android:text="删除"
-            android:textSize="24dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent" />
-        <Button
-            android:layout_toRightOf="@+id/delete"
-            android:layout_gravity="end|top"
-            android:id="@+id/save"
-            android:text="收藏"
-            android:textSize="24dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent" />
-    </RelativeLayout>
-
-    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@drawable/bg_plan_text">
         <androidx.cardview.widget.CardView
             android:id="@+id/item_card"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:paddingLeft="8dp"
             android:paddingRight="8dp"
-            android:layout_marginTop="4dp"
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
-            app:cardBackgroundColor="#EFDADA"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:cardBackgroundColor="#EBEDF2">
 
             <TextView
                 android:padding="4dp"
@@ -74,16 +48,24 @@
             <Button
                 android:layout_gravity="end|top"
                 android:id="@+id/card_bottom"
-                android:layout_marginTop="8dp"
-                android:layout_marginRight="8dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginRight="16dp"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:background="@mipmap/bg_buttom"
+                android:text="使用"
+                android:textColor="#6686FF"
+                android:textSize="12dp"/>
 
             <CheckBox
                 android:id="@+id/checkbox"
                 android:layout_gravity="end|center_vertical"
+                android:layout_marginRight="16dp"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:background="@mipmap/checkbox_unsel"
+                android:visibility="gone"/>
         </androidx.cardview.widget.CardView>
 
         <ImageView
@@ -97,4 +79,4 @@
             tools:ignore="MissingConstraints" />
     </RelativeLayout>
 
-</com.daimajia.swipe.SwipeLayout>
+</LinearLayout>
