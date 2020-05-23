@@ -11,4 +11,5 @@
     <color name="colorCalendar">#FAFAFA</color>
     <color name="colorWhite">#FFFFFF</color>
     <color name="colorRed">#E65F45</color>
+    <color name="pageColor">#176686FF</color>
 </resources>

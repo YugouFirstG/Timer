@@ -9,29 +9,29 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
 import androidx.fragment.app.FragmentContainerView;
-import androidx.fragment.app.FragmentManager;
+
 import androidx.fragment.app.FragmentTransaction;
-import androidx.viewpager.widget.ViewPager;
+
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-
-import com.example.timer.Adapter.QuickFragmentPageAdapter;
+import android.view.View;
 
 import com.flyco.tablayout.SegmentTabLayout;
-import com.flyco.tablayout.listener.CustomTabEntity;
-import com.flyco.tablayout.listener.OnTabSelectListener;
+
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 
 import java.util.Calendar;
 
 
 @SuppressLint("NewApi")
-public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
 
 
     private FragmentContainerView fragmentContainer;
@@ -56,31 +56,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         initViews();
     }
 
-//
-//    @Override
-//    public void onClick(View v) {
-////        switch (v.getId()){
-//////            case R.id.add_goal:
-//////                Intent intent = new Intent(this,GoalAddActivity.class);
-//////                startActivity(intent);
-//////
-//////                break;
-////            case R.id.update:
-////                GoalsDao.getInstance(this).dropTable();
-//////                TestDao.getInstance(this).deleteAll();
-////                break;
-////            case R.id.delete:
-//////                TestDao.getInstance(this).delete();
-////                GoalsDao.getInstance(this).delete(1);
-////                break;
-////            case R.id.select:
-////                intent = new Intent(this,RecordActivity.class);
-////                startActivity(intent);
-////                break;
-////            default:
-////                break;
-////        }
-//    }
 
 
     @Override
@@ -96,6 +71,8 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         setSupportActionBar(mToolbar);
         getSupportActionBar().setTitle(mouth[mMouth]+"");
         ActionBar actionBar = getSupportActionBar();
+        FloatingActionButton fb = findViewById(R.id.floating_button);
+        fb.setOnClickListener(this);
 
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         switch (menuPosition){
@@ -219,5 +196,17 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         }
         getSupportActionBar().invalidateOptionsMenu();
         return true;
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.floating_button:
+                Intent intent = new Intent(this,RecordActivity.class);
+                startActivity(intent);
+                break;
+            default:
+                break;
+        }
     }
 }

@@ -51,7 +51,6 @@ public class DateUtils {
 
          return  offset;
      }
-
      public static String getFormatTimeFromSeconds(int sec){
          int hour,min,second;
          hour = (sec-sec %3600)/3600;
@@ -70,4 +69,11 @@ public class DateUtils {
          s = h+"h "+m+"m "+se+"s";
          return s;
      }
+
+     public static String FormatMiss(int time){
+        String hh=time/3600>9?time/3600+"":"0"+time/3600;
+        String mm=(time% 3600)/60>9?(time% 3600)/60+"":"0"+(time% 3600)/60;
+        String ss=(time% 3600) % 60>9?(time% 3600) % 60+"":"0"+(time% 3600) % 60;
+        return hh+":"+mm+":"+ss;
+    }
 }

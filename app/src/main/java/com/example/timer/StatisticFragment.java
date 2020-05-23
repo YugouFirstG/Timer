@@ -329,8 +329,7 @@ public class StatisticFragment extends Fragment implements CalendarView.OnCalend
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.share:
-                Intent intent = new Intent(getContext(),RecordActivity.class);
-                startActivity(intent);
+                Log.d("","");
                 break;
             default:
                 break;

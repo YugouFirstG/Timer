@@ -6,4 +6,7 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="Finish">完成</string>
+    <string name="ContentHint">完成了什么任务？</string>
+    <string name="Theme">主题</string>
 </resources>
