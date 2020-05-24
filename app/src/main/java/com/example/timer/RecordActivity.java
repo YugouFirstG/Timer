@@ -1,17 +1,22 @@
 package com.example.timer;
 
 import androidx.annotation.NonNull;
+
 import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.coordinatorlayout.widget.CoordinatorLayout;
 
-
+import android.app.ActivityManager;
+import android.content.ComponentName;
 import android.content.ContentValues;
+import android.content.Context;
+import android.content.Intent;
+
+import android.content.ServiceConnection;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 
+import android.os.IBinder;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -24,25 +29,27 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.example.timer.DateBase.RecordsDao;
+
 import com.example.timer.DateBase.ThemeDao;
-import com.example.timer.Model.SimpleInfo;
-import com.example.timer.Model.StatisticBean;
+import com.example.timer.Services.CountService;
 import com.example.timer.Utils.DateUtils;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
-import com.github.mikephil.charting.formatter.PercentFormatter;
+
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
+
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
 
-public class RecordActivity extends BaseActivity implements View.OnClickListener, Chronometer.OnChronometerTickListener, AdapterView.OnItemSelectedListener {
+
+public class RecordActivity extends BaseActivity implements View.OnClickListener, Chronometer.OnChronometerTickListener, AdapterView.OnItemSelectedListener, Observer {
 
     String TAG = "RecordActivity";
 
@@ -55,21 +62,55 @@ public class RecordActivity extends BaseActivity implements View.OnClickListener
     EditText content;
     String startTime,endTime;
     FloatingActionButton b_start, b_stop, b_reset;
+    CountService mService;
+    ServiceConnection con = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            mService = ((CountService.CountBinder) service).getService();
+            mService.addObserver(RecordActivity.this);
+            if(mService.getState()!=1&&current!=0){
+                mService.startCount(current);
+            }
+
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+            mService=null;
+        }
+    };
+
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if(item.getItemId()==android.R.id.home){
-            finish();
+            Intent intent = new Intent(this,MainActivity.class);
+            startActivity(intent);
         }
         return super.onOptionsItemSelected(item);
 
     }
 
+
+
+
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_record);
 
+        Intent  intent = getIntent();
+        current = intent.getIntExtra("current",0);
+
+        bindService(
+                new Intent(this, CountService.class),
+                con,
+                BIND_AUTO_CREATE
+        );
+
+
+
+        setContentView(R.layout.activity_record);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setHomeButtonEnabled(true);
@@ -82,6 +123,7 @@ public class RecordActivity extends BaseActivity implements View.OnClickListener
         bt_end = findViewById(R.id.finish);
         content = findViewById(R.id.ed_content);
 
+
         b_start.setClickable(true);
         b_stop.setClickable(false);
         bt_end.setOnClickListener(this);
@@ -93,7 +135,6 @@ public class RecordActivity extends BaseActivity implements View.OnClickListener
         mChronometer.setOnChronometerTickListener(this);
         bottomSheet = findViewById(R.id.bottom_sheet);
         behavior = BottomSheetBehavior.from(bottomSheet);
-
 
         behavior.addBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
             @Override
@@ -111,7 +152,6 @@ public class RecordActivity extends BaseActivity implements View.OnClickListener
         drawDailyStatics(pieChart);
 
         spinner = findViewById(R.id.theme_sp);
-        String[] mItems = getResources().getStringArray(R.array.lunar_str);
         themes = ThemeDao.getInstance(this).select();
         if(themes.isEmpty()){
             themes.add("学习");
@@ -122,9 +162,11 @@ public class RecordActivity extends BaseActivity implements View.OnClickListener
         spinner.setAdapter(adapter);
         spinner.setOnItemSelectedListener(this);
 
+        mChronometer.start();
+
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -132,13 +174,14 @@ public class RecordActivity extends BaseActivity implements View.OnClickListener
                 b_start.setClickable(false);
                 b_stop.setClickable(true);
                 startTime = DateUtils.getCurrentTime();
-                mChronometer.start();
+                mService.startCount(current);
                 break;
             case R.id.stop:
                 b_start.setClickable(true);
                 b_stop.setClickable(false);
                 endTime = DateUtils.getCurrentTime();
-                mChronometer.stop();
+                behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+                mService.stopCount();
                 break;
             case R.id.reset:
                 reset();
@@ -155,7 +198,6 @@ public class RecordActivity extends BaseActivity implements View.OnClickListener
     @Override
     public void onChronometerTick(Chronometer chronometer) {
         mChronometer.setText(DateUtils.FormatMiss(current));
-        current++;
     }
 
 
@@ -204,6 +246,7 @@ public class RecordActivity extends BaseActivity implements View.OnClickListener
     }
 
     private void complete(View v){
+
         if(content.getText().toString().isEmpty()){
             Toast.makeText(this,"请填入内容",Toast.LENGTH_SHORT).show();
             return;
@@ -234,52 +277,29 @@ public class RecordActivity extends BaseActivity implements View.OnClickListener
         b_start.setClickable(true);
         b_stop.setClickable(false);
         current = 0;
-        mChronometer.stop();
+        mService.stopCount();
         mChronometer.setText(DateUtils.FormatMiss(current));
     }
-//    public static void slideToUp(View view){
-//        Animation slide = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 0.0f,
-//                Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF,
-//                1.0f, Animation.RELATIVE_TO_SELF, 0.0f);
-//
-//        slide.setDuration(2000);
-//        slide.setFillAfter(true);
-//        slide.setFillEnabled(true);
-//        view.startAnimation(slide);
-//
-//        slide.setAnimationListener(new Animation.AnimationListener() {
-//            @Override
-//            public void onAnimationStart(Animation animation) {
-//
-//            }
-//
-//            @Override
-//            public void onAnimationEnd(Animation animation) {
-//
-//            }
-//
-//            @Override
-//            public void onAnimationRepeat(Animation animation) {
-//
-//            }
-//        });
-//    }
-//
-//    public void onDialog(View view)
-//    {
-//        Dialog dialog=new Dialog(this);//可以在style中设定dialog的样式
-//        dialog.setContentView(R.layout.diallog);
-//        WindowManager.LayoutParams lp=dialog.getWindow().getAttributes();
-//        lp.gravity= Gravity.BOTTOM;
-//        lp.height= WindowManager.LayoutParams.WRAP_CONTENT;
-//        lp.width= WindowManager.LayoutParams.MATCH_PARENT;
-//        dialog.getWindow().setAttributes(lp);
-//        //设置该属性，dialog可以铺满屏幕
-//        dialog.getWindow().setBackgroundDrawable(null);
-//        dialog.show();
-////      dialog.getWindow().setWindowAnimations();
-//        slideToUp(dialog.getWindow().findViewById(R.id.pop_layout));
-//
-//    }
+
+    @Override
+    protected void onDestroy() {
+
+        unbindService(con);
+        super.onDestroy();
+    }
+    @Override
+    protected void onStart() {
+        super.onStart();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+        current = (int)arg;
+    }
 }
 

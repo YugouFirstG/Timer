@@ -12,15 +12,25 @@ import androidx.fragment.app.FragmentContainerView;
 
 import androidx.fragment.app.FragmentTransaction;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.content.res.Configuration;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
+import com.example.timer.Services.CountService;
 import com.flyco.tablayout.SegmentTabLayout;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -28,10 +38,14 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 
 import java.util.Calendar;
+import java.util.Observable;
+import java.util.Observer;
+
+import pub.devrel.easypermissions.EasyPermissions;
 
 
 @SuppressLint("NewApi")
-public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
+public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener, View.OnClickListener, Observer {
 
 
     private FragmentContainerView fragmentContainer;
@@ -43,10 +57,35 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     private int mMouth;
     private String[]mouth = {"January","February","March","April","May","June","July","August","September","October","November","December"};
 
+    CountService mService;
+    boolean bound;
+    ServiceConnection mConnection = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            mService = ((CountService.CountBinder) service).getService();
+            mService.addObserver(MainActivity.this);
+            bound = true;
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+            mService=null;
+            bound = false;
+        }
+    };
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        requestPermissions();
+
+        bindService(
+                new Intent(this, CountService.class),
+                mConnection,
+                Context.BIND_AUTO_CREATE);
+
         menuPosition = 0;
         if(savedInstanceState!=null){
             menuPosition = savedInstanceState.getInt("position",0);
@@ -141,6 +180,10 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
     @Override
     protected void onDestroy() {
+        if(bound){
+            unbindService(mConnection);
+            bound = false;
+        }
         super.onDestroy();
         Log.d("MaACT","onDestroy");
     }
@@ -208,5 +251,26 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
             default:
                 break;
         }
+    }
+
+    private void requestPermissions(){
+        String[] perms = {Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.READ_EXTERNAL_STORAGE};
+        if(EasyPermissions.hasPermissions(this,perms)){
+
+        }else{
+            EasyPermissions.requestPermissions(this,null,1,perms);
+
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        EasyPermissions.onRequestPermissionsResult(requestCode,permissions,grantResults,this);
+    }
+
+
+    @Override
+    public void update(Observable o, Object arg) {
     }
 }
