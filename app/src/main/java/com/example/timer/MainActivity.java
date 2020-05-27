@@ -250,7 +250,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.floating_button:
-                Intent intent = new Intent(this,RecordActivity.class);
+                Intent intent = new Intent(this,PartTimePlan.class);
                 startActivity(intent);
                 break;
             default:

@@ -14,19 +14,25 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ThemesActivity"></activity>
+        <activity android:name=".RecallActivity"></activity>
+        <activity android:name=".PartTimePlan" />
+        <activity
+            android:name=".ThemesActivity"
+            android:launchMode="singleTask" />
 
         <service
             android:name=".Services.CountService"
             android:enabled="true"
-            android:exported="true">
-        </service>
+            android:exported="true" />
 
-        <activity android:name=".RecordActivity"></activity>
+        <activity
+            android:name=".RecordActivity"
+            android:launchMode="singleTask" />
         <activity android:name=".GoalAddActivity" />
         <activity
             android:name=".BaseActivity"
-            android:configChanges="uiMode" />
+            android:configChanges="uiMode"
+            android:launchMode="singleTask" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

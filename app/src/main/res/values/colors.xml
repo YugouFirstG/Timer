@@ -12,4 +12,5 @@
     <color name="colorWhite">#FFFFFF</color>
     <color name="colorRed">#E65F45</color>
     <color name="pageColor">#176686FF</color>
+    <color name="divider">#fff5f6f8</color>
 </resources>

@@ -1,0 +1,308 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".PartTimePlan">
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true"
+        android:id="@+id/cl"
+        android:orientation="vertical"
+        >
+        <com.google.android.material.appbar.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        </com.google.android.material.appbar.AppBarLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <RelativeLayout
+                android:layout_marginHorizontal="16dp"
+                android:id="@+id/form"
+                android:layout_marginTop="?attr/actionBarSize"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <EditText
+                    android:id="@+id/ed_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="36dp"
+                    android:background="@null"
+                    android:enabled="true"
+                    android:textSize="14sp"
+                    android:hint="@string/ContentHint"
+                    android:textCursorDrawable="@color/iconSelected"
+                    />
+                <TextView
+                    android:text="@string/Theme"
+                    android:id="@+id/theme"
+                    android:textSize="14sp"
+                    android:gravity="center"
+                    android:layout_height="36dp"
+                    android:layout_below="@id/ed_content"
+                    android:layout_width="wrap_content"
+                    />
+                <TextView
+                    android:text="@string/type"
+                    android:id="@+id/type"
+                    android:textSize="14sp"
+                    android:layout_below="@+id/theme"
+                    android:layout_width="wrap_content"
+                    android:gravity="center"
+                    android:layout_height="36dp"/>
+                <TextView
+                    android:id="@+id/repeat"
+                    android:textSize="14sp"
+                    android:text="@string/repeat"
+                    android:layout_below="@id/type"
+                    android:layout_width="wrap_content"
+                    android:gravity="center"
+                    android:layout_height="36dp"/>
+
+                <Spinner
+                    android:scaleX="0.7"
+                    android:scaleY="0.7"
+                    android:background="@mipmap/into"
+                    android:layout_below="@id/ed_content"
+                    android:layout_alignParentRight="true"
+                    android:id="@+id/theme_sp"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:layout_alignParentEnd="true" />
+
+                <Spinner
+                    android:scaleX="0.7"
+                    android:scaleY="0.7"
+                    android:background="@mipmap/into"
+                    android:id="@+id/type_sp"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:layout_below="@id/theme_sp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginEnd="0dp"
+                    android:layout_marginRight="0dp" />
+
+                <View
+                    android:background="@color/divider"
+                    android:layout_below="@id/ed_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp" />
+                <View
+                    android:background="@color/divider"
+                    android:layout_below="@id/theme"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp" />
+                <View
+                    android:background="@color/divider"
+                    android:layout_below="@id/type"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp" />
+                <View
+                    android:background="@color/divider"
+                    android:layout_below="@id/repeat"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp" />
+
+            </RelativeLayout>
+            <RelativeLayout
+                android:id="@+id/repeat_s"
+                android:layout_marginHorizontal="16dp"
+                android:layout_below="@+id/form"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="36dp">
+                <CheckBox
+                    android:textColor="@drawable/text_selector"
+
+                    android:text="@string/Sun"
+                    android:id="@+id/sun"
+                    android:gravity="center"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:button="@null"
+                    android:background="@drawable/check_box"
+                    />
+                <CheckBox
+                    android:textColor="@drawable/text_selector"
+                    android:gravity="center"
+                    android:text="@string/Mon"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_toRightOf="@id/sun"
+                    android:id="@+id/mon"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:background="@drawable/check_box"
+                    android:button="@null"
+                    android:layout_toEndOf="@id/sun"
+                     />
+
+                <CheckBox
+                    android:textColor="@drawable/text_selector"
+                    android:gravity="center"
+                    android:text="@string/The"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_toRightOf="@id/mon"
+                    android:id="@+id/thu"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:button="@null"
+                    android:background="@drawable/check_box"
+                    android:layout_toEndOf="@id/mon" />
+
+                <CheckBox
+                    android:textColor="@drawable/text_selector"
+                    android:gravity="center"
+                    android:text="@string/Wed"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_toRightOf="@id/thu"
+                    android:id="@+id/thr"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:button="@null"
+                    android:background="@drawable/check_box"
+                    android:layout_toEndOf="@id/thu" />
+                <CheckBox
+                    android:textColor="@drawable/text_selector"
+                    android:gravity="center"
+                    android:text="@string/Thu"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_toRightOf="@id/thr"
+                    android:id="@+id/the"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:button="@null"
+                    android:background="@drawable/check_box"
+                    android:layout_toEndOf="@id/thr" />
+
+                <CheckBox
+                    android:textColor="@drawable/text_selector"
+                    android:gravity="center"
+                    android:text="@string/Fri"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginStart="8dp"
+                    android:id="@+id/frd"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:layout_toEndOf="@id/the"
+                    android:layout_toRightOf="@id/the"
+                    android:button="@null"
+                    android:background="@drawable/check_box"
+                    />
+
+                <CheckBox
+                    android:textColor="@drawable/text_selector"
+                    android:gravity="center"
+                    android:text="@string/Sat"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_toRightOf="@id/frd"
+                    android:id="@+id/sat"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:button="@null"
+                    android:background="@drawable/check_box"
+                    android:layout_toEndOf="@id/frd" />
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_marginTop="8dp"
+                android:layout_below="@id/repeat_s"
+                android:layout_marginHorizontal="16dp"
+                android:id="@+id/form_2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/tv_hint"
+                    android:layout_width="match_parent"
+                    android:layout_height="36dp"
+                    android:background="@null"
+                    android:textSize="14sp"
+                    android:hint="@string/hyper"
+                    android:textCursorDrawable="@color/iconSelected"
+                    />
+                <TextView
+                    android:text="@string/Theme"
+                    android:id="@+id/alarm"
+                    android:textSize="14sp"
+                    android:gravity="center"
+                    android:layout_height="36dp"
+                    android:layout_below="@id/tv_hint"
+                    android:layout_width="wrap_content"
+                    />
+                <TextView
+                    android:text="@string/type"
+                    android:id="@+id/priority"
+                    android:textSize="14sp"
+                    android:layout_below="@id/alarm"
+                    android:layout_width="wrap_content"
+                    android:gravity="center"
+                    android:layout_height="36dp"/>
+
+                <Spinner
+                    android:scaleX="0.7"
+                    android:scaleY="0.7"
+                    android:background="@mipmap/into"
+                    android:layout_below="@id/tv_hint"
+                    android:layout_alignParentRight="true"
+                    android:id="@+id/time_sp"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:layout_alignParentEnd="true" />
+
+                <Spinner
+                    android:scaleX="0.7"
+                    android:scaleY="0.7"
+                    android:background="@mipmap/into"
+                    android:id="@+id/priority_sp"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:layout_below="@id/time_sp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginEnd="0dp"
+                    android:layout_marginRight="0dp" />
+
+                <View
+                    android:background="@color/divider"
+                    android:layout_below="@id/tv_hint"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp" />
+                <View
+                    android:background="@color/divider"
+                    android:layout_below="@id/alarm"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp" />
+            </RelativeLayout>
+        </RelativeLayout>
+
+
+        <Button
+            android:text="@string/Finish"
+            android:id="@+id/bt_ok"
+            android:textColor="@color/iconSelected"
+            android:layout_gravity="bottom"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@drawable/button_r"
+            />
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/colorAccent"
+            android:theme="@style/AppTheme"
+            app:title="主题"
+
+            app:titleTextColor="@color/colorText" />
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
