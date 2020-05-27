@@ -34,6 +34,11 @@ public abstract class QuickAdapter<T> extends BaseAdapter {
         this.mSupport = support;
     }
 
+    public void addAt(T elem,int p){
+        mData.add(p,elem);
+        notifyData();
+    }
+
     public void add(T elem){
         mData.add(elem);
         notifyData();
@@ -61,6 +66,7 @@ public abstract class QuickAdapter<T> extends BaseAdapter {
         mData.remove(index);
         notifyData();
     }
+
 
     public void replaceALl(List<T> elem){
         mData.clear();
@@ -239,15 +245,6 @@ public abstract class QuickAdapter<T> extends BaseAdapter {
         return super.getViewTypeCount();
     }
 
-//    @Override
-//    public boolean isEmpty() {
-//        return super.isEmpty();
-//    }
-
-//    @Override
-//    public void notifyListDataSetChanged() {
-//        super.notifyListDataSetChanged();
-//    }
 
     public List<T> getData(){
         return mData;

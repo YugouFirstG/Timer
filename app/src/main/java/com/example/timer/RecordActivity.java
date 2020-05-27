@@ -30,6 +30,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 
+import com.example.timer.DateBase.RecordsDao;
 import com.example.timer.DateBase.ThemeDao;
 import com.example.timer.Services.CountService;
 import com.example.timer.Utils.DateUtils;
@@ -102,8 +103,11 @@ public class RecordActivity extends BaseActivity implements View.OnClickListener
         Intent  intent = getIntent();
         current = intent.getIntExtra("current",0);
 
+
+        Intent i = new Intent(this, CountService.class);
+        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         bindService(
-                new Intent(this, CountService.class),
+                i,
                 con,
                 BIND_AUTO_CREATE
         );
@@ -171,17 +175,10 @@ public class RecordActivity extends BaseActivity implements View.OnClickListener
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.start:
-                b_start.setClickable(false);
-                b_stop.setClickable(true);
-                startTime = DateUtils.getCurrentTime();
-                mService.startCount(current);
+                start();
                 break;
             case R.id.stop:
-                b_start.setClickable(true);
-                b_stop.setClickable(false);
-                endTime = DateUtils.getCurrentTime();
-                behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
-                mService.stopCount();
+                stop();
                 break;
             case R.id.reset:
                 reset();
@@ -267,9 +264,9 @@ public class RecordActivity extends BaseActivity implements View.OnClickListener
         values.put("endTime",endTime);
         values.put("startDate",date);
         values.put("type",theme);
-//        RecordsDao.getInstance(this).insert(values);
+        RecordsDao.getInstance(this).insert(values);
 
-        Log.d("Re",themes.get(spinner.getSelectedItemPosition())+" "+current+" "+cot+" \n"+startTime+"\n"+endTime);
+        Log.d("Re",themes.get(spinner.getSelectedItemPosition())+" "+time+" "+cot+" \n"+startTime+"\n"+endTime);
         reset();
     }
 
@@ -279,6 +276,21 @@ public class RecordActivity extends BaseActivity implements View.OnClickListener
         current = 0;
         mService.stopCount();
         mChronometer.setText(DateUtils.FormatMiss(current));
+    }
+
+    private void stop(){
+        b_start.setClickable(true);
+        b_stop.setClickable(false);
+        endTime = DateUtils.getCurrentTime();
+        behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+        mService.stopCount();
+    }
+
+    private void start(){
+        b_start.setClickable(false);
+        b_stop.setClickable(true);
+        startTime = DateUtils.getCurrentTime();
+        mService.startCount(current);
     }
 
     @Override

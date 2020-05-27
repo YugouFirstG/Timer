@@ -23,7 +23,7 @@ public class ThemeDao implements Modify {
         mDB = mHelper.getWritableDatabase();
         String sql = "create table if not exists " +
                 "themes(id integer primary key autoincrement,"+
-                "theme text)";
+                "theme text unique)";
         mDB.execSQL(sql);
     }
 
@@ -58,6 +58,14 @@ public class ThemeDao implements Modify {
     }
 
 
+    public void insertAll(List<String> ls){
+        for(int i=0;i<ls.size();i++){
+            ContentValues values = new ContentValues();
+            values.put("theme",ls.get(i));
+            insert(values);
+        }
+    }
+
     @Override
     public void insert(ContentValues values) {
         try {
@@ -80,5 +88,13 @@ public class ThemeDao implements Modify {
     @Override
     public void dropTable() {
         mDB.execSQL("drop table "+TABLE_NAME);
+    }
+
+    public void clearTable(){
+        mDB.execSQL("drop table "+TABLE_NAME);
+        String sql = "create table if not exists " +
+                "themes(id integer primary key autoincrement,"+
+                "theme text unique)";
+        mDB.execSQL(sql);
     }
 }

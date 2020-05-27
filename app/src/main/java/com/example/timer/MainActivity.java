@@ -21,6 +21,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
@@ -80,9 +81,10 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         requestPermissions();
-
+        Intent intent = new Intent(this, CountService.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         bindService(
-                new Intent(this, CountService.class),
+                intent,
                 mConnection,
                 Context.BIND_AUTO_CREATE);
 
@@ -168,6 +170,9 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                     ((StatisticFragment) f).setStatisticDuration(3);
 
                 }
+                break;
+            case R.id.theme_m:
+                startActivity(new Intent(this, ThemesActivity.class));
                 break;
             default:
                 break;

@@ -1,16 +1,13 @@
 package com.example.timer.Adapter;
 
 import android.content.Context;
-import android.content.res.TypedArray;
-import android.graphics.Color;
-import android.graphics.Typeface;
 import android.view.View;
 import android.widget.TextView;
 
 import com.daimajia.numberprogressbar.NumberProgressBar;
 import com.example.timer.Interfaces.IViewType;
 import com.example.timer.Interfaces.QuickMultiSupport;
-import com.example.timer.Model.RecordBean;
+
 import com.example.timer.Model.SimpleInfo;
 import com.example.timer.R;
 import com.example.timer.Utils.DateUtils;
@@ -64,7 +61,7 @@ public class StatisticAdapter extends QuickAdapter<IViewType> {
         holder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                remove(position);
+                //TODO 调到记录的详细界面
             }
         });
     }
