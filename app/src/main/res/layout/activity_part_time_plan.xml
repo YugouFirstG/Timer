@@ -109,109 +109,109 @@
                     android:layout_height="1dp" />
 
             </RelativeLayout>
-            <RelativeLayout
+            <LinearLayout
                 android:id="@+id/repeat_s"
                 android:layout_marginHorizontal="16dp"
                 android:layout_below="@+id/form"
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="36dp">
+                android:layout_height="48dp">
                 <CheckBox
                     android:textColor="@drawable/text_selector"
 
                     android:text="@string/Sun"
                     android:id="@+id/sun"
                     android:gravity="center"
-                    android:layout_width="36dp"
-                    android:layout_height="36dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:button="@null"
                     android:background="@drawable/check_box"
                     />
+                <Space
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"/>
                 <CheckBox
                     android:textColor="@drawable/text_selector"
                     android:gravity="center"
                     android:text="@string/Mon"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginStart="8dp"
-                    android:layout_toRightOf="@id/sun"
+
+
                     android:id="@+id/mon"
-                    android:layout_width="36dp"
-                    android:layout_height="36dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:background="@drawable/check_box"
                     android:button="@null"
-                    android:layout_toEndOf="@id/sun"
                      />
-
+                <Space
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"/>
                 <CheckBox
                     android:textColor="@drawable/text_selector"
                     android:gravity="center"
                     android:text="@string/The"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginStart="8dp"
-                    android:layout_toRightOf="@id/mon"
-                    android:id="@+id/thu"
-                    android:layout_width="36dp"
-                    android:layout_height="36dp"
-                    android:button="@null"
-                    android:background="@drawable/check_box"
-                    android:layout_toEndOf="@id/mon" />
 
+
+                    android:id="@+id/thu"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:button="@null"
+                    android:background="@drawable/check_box" />
+                <Space
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"/>
                 <CheckBox
                     android:textColor="@drawable/text_selector"
                     android:gravity="center"
                     android:text="@string/Wed"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginStart="8dp"
-                    android:layout_toRightOf="@id/thu"
                     android:id="@+id/thr"
-                    android:layout_width="36dp"
-                    android:layout_height="36dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:button="@null"
-                    android:background="@drawable/check_box"
-                    android:layout_toEndOf="@id/thu" />
+                    android:background="@drawable/check_box" />
+                <Space
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"/>
                 <CheckBox
                     android:textColor="@drawable/text_selector"
                     android:gravity="center"
                     android:text="@string/Thu"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginStart="8dp"
-                    android:layout_toRightOf="@id/thr"
                     android:id="@+id/the"
-                    android:layout_width="36dp"
-                    android:layout_height="36dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:button="@null"
-                    android:background="@drawable/check_box"
-                    android:layout_toEndOf="@id/thr" />
-
+                    android:background="@drawable/check_box" />
+                <Space
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"/>
                 <CheckBox
                     android:textColor="@drawable/text_selector"
                     android:gravity="center"
                     android:text="@string/Fri"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginStart="8dp"
                     android:id="@+id/frd"
-                    android:layout_width="36dp"
-                    android:layout_height="36dp"
-                    android:layout_toEndOf="@id/the"
-                    android:layout_toRightOf="@id/the"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:button="@null"
                     android:background="@drawable/check_box"
                     />
-
+                <Space
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"/>
                 <CheckBox
                     android:textColor="@drawable/text_selector"
                     android:gravity="center"
                     android:text="@string/Sat"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginStart="8dp"
-                    android:layout_toRightOf="@id/frd"
                     android:id="@+id/sat"
-                    android:layout_width="36dp"
-                    android:layout_height="36dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:button="@null"
-                    android:background="@drawable/check_box"
-                    android:layout_toEndOf="@id/frd" />
-            </RelativeLayout>
+                    android:background="@drawable/check_box" />
+            </LinearLayout>
             <RelativeLayout
                 android:layout_marginTop="8dp"
                 android:layout_below="@id/repeat_s"
