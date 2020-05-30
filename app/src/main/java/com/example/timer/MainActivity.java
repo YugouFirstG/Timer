@@ -29,6 +29,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.timer.Services.CountService;
@@ -52,6 +53,12 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     private FragmentContainerView fragmentContainer;
     private SegmentTabLayout tabLayout;
     private BottomNavigationView bottomNavigationView;
+    private FloatingActionButton floatingActionButton;
+    private Button dayHabitBtn;
+    private Button oldRecordBtn;
+    private Button lastRecordBtn;
+    private Button planBtn;
+    private boolean isClick;
 
     private Toolbar mToolbar;
     private int menuPosition;
@@ -83,12 +90,10 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         requestPermissions();
         Intent intent = new Intent(this, CountService.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        //startService(intent);
-
-//        bindService(
-//                intent,
-//                mConnection,
-//                Context.BIND_AUTO_CREATE);
+        bindService(
+                intent,
+                mConnection,
+                Context.BIND_AUTO_CREATE);
 
         menuPosition = 0;
         if(savedInstanceState!=null){
@@ -116,6 +121,12 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         ActionBar actionBar = getSupportActionBar();
         FloatingActionButton fb = findViewById(R.id.floating_button);
         fb.setOnClickListener(this);
+        floatingActionButton = findViewById(R.id.floating_button);
+        dayHabitBtn = findViewById(R.id.day_habit_btn);
+        oldRecordBtn = findViewById(R.id.old_record_btn);
+        lastRecordBtn = findViewById(R.id.last_record_btn);
+        planBtn = findViewById(R.id.plan_btn);
+        isClick = false;
 
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         switch (menuPosition){
@@ -187,10 +198,10 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
     @Override
     protected void onDestroy() {
-//        if(bound){
-//            unbindService(mConnection);
-//            bound = false;
-//        }
+        if(bound){
+            unbindService(mConnection);
+            bound = false;
+        }
         super.onDestroy();
         Log.d("MaACT","onDestroy");
     }
@@ -235,14 +246,17 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.fragment_ce,new PlanFragment());
             fragmentTransaction.commit();
+            floatingActionButton.setVisibility(View.VISIBLE);
         }else if(position==1){
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.fragment_ce,new HabitFragment());
             fragmentTransaction.commit();
+            floatingActionButton.setVisibility(View.VISIBLE);
         }else {
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.fragment_ce,new StatisticFragment());
             fragmentTransaction.commit();
+            floatingActionButton.setVisibility(View.GONE);
         }
         getSupportActionBar().invalidateOptionsMenu();
         return true;
@@ -252,8 +266,23 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.floating_button:
-                Intent intent = new Intent(this,RecordActivity.class);
-                startActivity(intent);
+//                Intent intent = new Intent(this,PartTimePlan.class);
+//                startActivity(intent);
+                if(isClick){
+                    isClick = false;
+                    floatingActionButton.setImageResource(R.mipmap.add_float);
+                    dayHabitBtn.setVisibility(View.GONE);
+                    oldRecordBtn.setVisibility(View.GONE);
+                    lastRecordBtn.setVisibility(View.GONE);
+                    planBtn.setVisibility(View.GONE);
+                }else {
+                    isClick = true;
+                    floatingActionButton.setImageResource(R.mipmap.cancel);
+                    dayHabitBtn.setVisibility(View.VISIBLE);
+                    oldRecordBtn.setVisibility(View.VISIBLE);
+                    lastRecordBtn.setVisibility(View.VISIBLE);
+                    planBtn.setVisibility(View.VISIBLE);
+                }
                 break;
             default:
                 break;
