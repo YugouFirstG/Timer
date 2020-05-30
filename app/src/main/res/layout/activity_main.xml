@@ -36,6 +36,56 @@
             app:layout_anchorGravity="center">
         </androidx.fragment.app.FragmentContainerView>
 
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|bottom"
+            android:layout_marginBottom="140dp"
+            android:layout_marginRight="10dp"
+            android:orientation="vertical">
+            <Button
+                android:id="@+id/day_habit_btn"
+                android:text="日常习惯"
+                android:textSize="16dp"
+                android:textColor="#FFFFFF"
+                android:layout_margin="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_plan_btn"
+                android:visibility="gone"/>
+            <Button
+                android:id="@+id/old_record_btn"
+                android:text="回忆记录"
+                android:textSize="16dp"
+                android:textColor="#FFFFFF"
+                android:layout_margin="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_plan_btn"
+                android:visibility="gone"/>
+            <Button
+                android:id="@+id/last_record_btn"
+                android:text="即时记录"
+                android:textSize="16dp"
+                android:textColor="#FFFFFF"
+                android:layout_margin="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_plan_btn"
+                android:visibility="gone"/>
+            <Button
+                android:id="@+id/plan_btn"
+                android:text="临时计划"
+                android:textSize="16dp"
+                android:textColor="#FFFFFF"
+                android:layout_margin="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_plan_btn"
+                android:visibility="gone"/>
+
+        </LinearLayout>
+
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/floating_button"
             android:layout_gravity="end|bottom"
@@ -51,7 +101,7 @@
             app:borderWidth="0dp"
             app:pressedTranslationZ="4dp"
             app:rippleColor="#FF9E9E9E"
-            android:backgroundTint="#6686FF"
+            android:tint="#6686FF"
             tools:ignore="MissingConstraints" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
