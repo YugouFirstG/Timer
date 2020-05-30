@@ -269,6 +269,7 @@ public class RecordActivity extends BaseActivity implements View.OnClickListener
         values.put("endTime",endTime);
         values.put("startDate",date);
         values.put("type",theme);
+        values.put("recorded",1);
         RecordsDao.getInstance(this).insert(values);
 
         Log.d("Re",themes.get(spinner.getSelectedItemPosition())+" "+time+" "+cot+" \n"+startTime+"\n"+endTime);

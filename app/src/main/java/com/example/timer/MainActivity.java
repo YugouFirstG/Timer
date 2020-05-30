@@ -65,36 +65,12 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     private int mMouth;
     private String[]mouth = {"January","February","March","April","May","June","July","August","September","October","November","December"};
 
-    CountService mService;
-    boolean bound;
-    ServiceConnection mConnection = new ServiceConnection() {
-        @Override
-        public void onServiceConnected(ComponentName name, IBinder service) {
-            mService = ((CountService.CountBinder) service).getService();
-            mService.addObserver(MainActivity.this);
-            bound = true;
-        }
-
-        @Override
-        public void onServiceDisconnected(ComponentName name) {
-            mService=null;
-            bound = false;
-        }
-    };
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         requestPermissions();
-        Intent intent = new Intent(this, CountService.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        bindService(
-                intent,
-                mConnection,
-                Context.BIND_AUTO_CREATE);
-
         menuPosition = 0;
         if(savedInstanceState!=null){
             menuPosition = savedInstanceState.getInt("position",0);
@@ -126,6 +102,11 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         oldRecordBtn = findViewById(R.id.old_record_btn);
         lastRecordBtn = findViewById(R.id.last_record_btn);
         planBtn = findViewById(R.id.plan_btn);
+
+        dayHabitBtn.setOnClickListener(this);
+        oldRecordBtn.setOnClickListener(this);
+        lastRecordBtn.setOnClickListener(this);
+        planBtn.setOnClickListener(this);
         isClick = false;
 
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
@@ -198,10 +179,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
     @Override
     protected void onDestroy() {
-        if(bound){
-            unbindService(mConnection);
-            bound = false;
-        }
         super.onDestroy();
         Log.d("MaACT","onDestroy");
     }
@@ -264,10 +241,9 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
     @Override
     public void onClick(View v) {
+
         switch (v.getId()){
             case R.id.floating_button:
-//                Intent intent = new Intent(this,PartTimePlan.class);
-//                startActivity(intent);
                 if(isClick){
                     isClick = false;
                     floatingActionButton.setImageResource(R.mipmap.add_float);
@@ -283,6 +259,25 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                     lastRecordBtn.setVisibility(View.VISIBLE);
                     planBtn.setVisibility(View.VISIBLE);
                 }
+                break;
+
+            case R.id.day_habit_btn:
+                bottomNavigationView.setSelectedItemId(R.id.bottom_nav_habit);
+                break;
+
+            case R.id.last_record_btn:
+                Intent it_lr = new Intent(this,RecordActivity.class);
+                startActivity(it_lr);
+                break;
+
+            case R.id.old_record_btn:
+                Intent it_or = new Intent(this,RecallActivity.class);
+                startActivity(it_or);
+                break;
+
+            case R.id.plan_btn:
+                Intent it_pl = new Intent(this,PartTimePlan.class);
+                startActivity(it_pl);
                 break;
             default:
                 break;

@@ -12,8 +12,9 @@ public class RecordBean implements IViewType {
     private String endTime;
     private String date;
     private int id;
+    boolean isComplete;
 
-    public RecordBean(String type, String title, String content, String startTime, int costTime,String endTime, String date) {
+    public RecordBean(String type, String title, String content, String startTime, int costTime,String endTime, String date,boolean isComplete) {
         this.type = type;
         this.title = title;
         this.content = content;
@@ -21,9 +22,10 @@ public class RecordBean implements IViewType {
         this.costTime = costTime;
         this.date = date;
         this.endTime = endTime;
+        this.isComplete = isComplete;
     }
 
-    public void updateData(String type, String title, String content, String startTime, int costTime,String endTime, String date) {
+    public void updateData(String type, String title, String content, String startTime, int costTime,String endTime, String date,boolean isComplete) {
         this.type = type;
         this.title = title;
         this.content = content;
@@ -31,6 +33,7 @@ public class RecordBean implements IViewType {
         this.costTime = costTime;
         this.date = date;
         this.endTime = endTime;
+        this.isComplete = isComplete;
     }
 
     public void setId(int id) {
@@ -67,6 +70,14 @@ public class RecordBean implements IViewType {
 
     public String getEndTime() {
         return endTime;
+    }
+
+    public boolean isComplete() {
+        return isComplete;
+    }
+
+    public void setComplete(boolean complete) {
+        isComplete = complete;
     }
 
     @Override

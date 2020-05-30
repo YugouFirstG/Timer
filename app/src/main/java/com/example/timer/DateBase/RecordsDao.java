@@ -38,6 +38,7 @@ public class RecordsDao implements Modify {
                 "costTime integer," +
                 "endTime time,"+
                 "startDate date," +
+                "recorded integer,"+
                 "type text)";
         mDB.execSQL(sql);
     }
@@ -103,7 +104,8 @@ public class RecordsDao implements Modify {
                         cursor.getString(cursor.getColumnIndex("startTime")),
                         cursor.getInt(cursor.getColumnIndex("costTime")),
                         cursor.getString(cursor.getColumnIndex("endTime")),
-                        cursor.getString(cursor.getColumnIndex("startDate"))
+                        cursor.getString(cursor.getColumnIndex("startDate")),
+                        cursor.getInt(cursor.getColumnIndex("recorded"))==1
                 );
                 r.setId(cursor.getInt(cursor.getColumnIndex("id")));
                 list.add(r);
