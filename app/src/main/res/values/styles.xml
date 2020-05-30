@@ -7,7 +7,6 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
-
     <dimen name="checkBoxSize">40dp</dimen>
     <dimen name="checkBoxRadius">20dp</dimen>
 </resources>

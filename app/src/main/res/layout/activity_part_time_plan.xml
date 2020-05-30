@@ -63,22 +63,25 @@
                     android:layout_height="36dp"/>
 
                 <Spinner
-                    android:scaleX="0.7"
-                    android:scaleY="0.7"
-                    android:background="@mipmap/into"
+                    android:paddingHorizontal="20dp"
+                    android:gravity="center"
+                    android:background="@drawable/spinner_icon"
                     android:layout_below="@id/ed_content"
                     android:layout_alignParentRight="true"
                     android:id="@+id/theme_sp"
-                    android:layout_width="36dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="36dp"
+                    android:minWidth="36dp"
                     android:layout_alignParentEnd="true" />
 
                 <Spinner
-                    android:scaleX="0.7"
-                    android:scaleY="0.7"
-                    android:background="@mipmap/into"
+                    android:paddingHorizontal="20dp"
+
+                    android:gravity="center"
+                    android:background="@drawable/spinner_icon"
                     android:id="@+id/type_sp"
-                    android:layout_width="36dp"
+                    android:minWidth="36dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="36dp"
                     android:layout_below="@id/theme_sp"
                     android:layout_alignParentEnd="true"
@@ -142,7 +145,7 @@
                     android:layout_height="wrap_content"
                     android:background="@drawable/check_box"
                     android:button="@null"
-                     />
+                    />
                 <Space
                     android:layout_weight="1"
                     android:layout_width="0dp"
@@ -229,7 +232,7 @@
                     android:textCursorDrawable="@color/iconSelected"
                     />
                 <TextView
-                    android:text="@string/Theme"
+                    android:text="@string/Regular_alarm"
                     android:id="@+id/alarm"
                     android:textSize="14sp"
                     android:gravity="center"
@@ -238,38 +241,45 @@
                     android:layout_width="wrap_content"
                     />
                 <TextView
-                    android:text="@string/type"
+                    android:text="@string/Priority"
                     android:id="@+id/priority"
                     android:textSize="14sp"
                     android:layout_below="@id/alarm"
                     android:layout_width="wrap_content"
                     android:gravity="center"
                     android:layout_height="36dp"/>
+                <TextView
+                    android:layout_below="@id/tv_hint"
+                    android:layout_toLeftOf="@id/time_sp"
+                    android:gravity="right|center_vertical"
+                    android:id="@+id/time_s"
+                    android:layout_width="wrap_content"
+                    android:layout_height="36dp"
+                    android:layout_toStartOf="@id/time_sp" />
 
-                <Spinner
-                    android:scaleX="0.7"
-                    android:scaleY="0.7"
-                    android:background="@mipmap/into"
+                <ImageView
+
+                    android:background="@drawable/spinner_icon"
                     android:layout_below="@id/tv_hint"
                     android:layout_alignParentRight="true"
                     android:id="@+id/time_sp"
-                    android:layout_width="36dp"
+                    android:layout_width="wrap_content"
+                    android:minWidth="36dp"
                     android:layout_height="36dp"
                     android:layout_alignParentEnd="true" />
 
                 <Spinner
-                    android:scaleX="0.7"
-                    android:scaleY="0.7"
-                    android:background="@mipmap/into"
+                    android:paddingHorizontal="20dp"
+                    android:minWidth="36dp"
+                    android:gravity="center"
+                    android:background="@drawable/spinner_icon"
                     android:id="@+id/priority_sp"
-                    android:layout_width="36dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="36dp"
                     android:layout_below="@id/time_sp"
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentRight="true"
-                    android:layout_marginTop="2dp"
-                    android:layout_marginEnd="0dp"
-                    android:layout_marginRight="0dp" />
+                    />
 
                 <View
                     android:background="@color/divider"
@@ -288,6 +298,7 @@
         <Button
             android:text="@string/Finish"
             android:id="@+id/bt_ok"
+            android:enabled="false"
             android:textColor="@color/iconSelected"
             android:layout_gravity="bottom"
             android:layout_width="match_parent"

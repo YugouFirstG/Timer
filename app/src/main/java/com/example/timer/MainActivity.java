@@ -83,10 +83,12 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         requestPermissions();
         Intent intent = new Intent(this, CountService.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        bindService(
-                intent,
-                mConnection,
-                Context.BIND_AUTO_CREATE);
+        //startService(intent);
+
+//        bindService(
+//                intent,
+//                mConnection,
+//                Context.BIND_AUTO_CREATE);
 
         menuPosition = 0;
         if(savedInstanceState!=null){
@@ -185,10 +187,10 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
     @Override
     protected void onDestroy() {
-        if(bound){
-            unbindService(mConnection);
-            bound = false;
-        }
+//        if(bound){
+//            unbindService(mConnection);
+//            bound = false;
+//        }
         super.onDestroy();
         Log.d("MaACT","onDestroy");
     }
@@ -250,7 +252,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.floating_button:
-                Intent intent = new Intent(this,PartTimePlan.class);
+                Intent intent = new Intent(this,RecordActivity.class);
                 startActivity(intent);
                 break;
             default:

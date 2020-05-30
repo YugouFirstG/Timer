@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="ThemeDialog" parent="android:Theme.Material.Light.Dialog">
+        <item name="android:colorAccent">@color/iconSelected</item>
+        <item name="android:colorPrimary">@color/colorWhite</item>
+        <item name="android:colorPrimaryDark">@color/colorPrimary</item>
+    </style>
+</resources>

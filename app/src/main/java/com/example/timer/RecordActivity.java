@@ -64,6 +64,9 @@ public class RecordActivity extends BaseActivity implements View.OnClickListener
     String startTime,endTime;
     FloatingActionButton b_start, b_stop, b_reset;
     CountService mService;
+    Button bt_end;
+    Intent i;
+
     ServiceConnection con = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
@@ -104,8 +107,10 @@ public class RecordActivity extends BaseActivity implements View.OnClickListener
         current = intent.getIntExtra("current",0);
 
 
-        Intent i = new Intent(this, CountService.class);
+        i = new Intent(this, CountService.class);
         i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+        startService(i);
         bindService(
                 i,
                 con,
@@ -120,7 +125,7 @@ public class RecordActivity extends BaseActivity implements View.OnClickListener
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        Button bt_end;
+
         b_start = findViewById(R.id.start);
         b_stop = findViewById(R.id.stop);
         b_reset = findViewById(R.id.reset);
@@ -273,6 +278,7 @@ public class RecordActivity extends BaseActivity implements View.OnClickListener
     private void reset(){
         b_start.setClickable(true);
         b_stop.setClickable(false);
+        bt_end.setEnabled(false);
         current = 0;
         mService.stopCount();
         mChronometer.setText(DateUtils.FormatMiss(current));
@@ -282,6 +288,7 @@ public class RecordActivity extends BaseActivity implements View.OnClickListener
         b_start.setClickable(true);
         b_stop.setClickable(false);
         endTime = DateUtils.getCurrentTime();
+        startTime = mService.getStartTime();
         behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
         mService.stopCount();
     }
@@ -289,13 +296,11 @@ public class RecordActivity extends BaseActivity implements View.OnClickListener
     private void start(){
         b_start.setClickable(false);
         b_stop.setClickable(true);
-        startTime = DateUtils.getCurrentTime();
         mService.startCount(current);
     }
 
     @Override
     protected void onDestroy() {
-
         unbindService(con);
         super.onDestroy();
     }
@@ -311,7 +316,7 @@ public class RecordActivity extends BaseActivity implements View.OnClickListener
 
     @Override
     public void update(Observable o, Object arg) {
-        current = (int)arg;
+            current = (int)arg;
     }
 }
 

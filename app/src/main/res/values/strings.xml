@@ -21,4 +21,6 @@
     <string name="Sat">六</string>
     <string name="EndTime">结束时间</string>
     <string name="StartTime">开始时间</string>
+    <string name="Regular_alarm">定时提醒</string>
+    <string name="Priority">优先级</string>
 </resources>

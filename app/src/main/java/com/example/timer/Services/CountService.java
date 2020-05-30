@@ -27,7 +27,8 @@ public class CountService extends Service {
     int current;
     int state;
     private MyObservable myObservable;
-
+    boolean isRemove = false;
+    String startTime,endTime;
 
     private NotificationCompat.Builder builder;
 
@@ -37,7 +38,13 @@ public class CountService extends Service {
         return new CountBinder();
     }
 
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        return super.onStartCommand(intent, flags, startId);
+    }
+
     public void startCount(int cur){
+        startTime = DateUtils.getCurrentTime();
         current=cur;
         state = 1;
         initialNotification();
@@ -50,7 +57,7 @@ public class CountService extends Service {
                         handler.sendMessage(handler.obtainMessage(0,current));
                         updateNotification();
                         Thread.sleep(1000);
-                        Log.d("time",""+current);
+                        Log.d("Service",""+current);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
@@ -60,9 +67,23 @@ public class CountService extends Service {
     }
 
    public void stopCount(){
-        removeNotification();
         state=0;
         current=0;
+        endTime = DateUtils.getCurrentTime();
+        Log.d("Service",endTime);
+        removeNotification();
+    }
+
+    public int getCurrent() {
+        return current;
+    }
+
+    public String getStartTime() {
+        return startTime;
+    }
+
+    public String getEndTime() {
+        return endTime;
     }
 
     public int getState(){
@@ -85,7 +106,6 @@ public class CountService extends Service {
 
     @Override
     public void onDestroy() {
-        stopCount();
         removeNotification();
         Log.d("Service","destroy");
         super.onDestroy();
@@ -97,9 +117,10 @@ public class CountService extends Service {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             CharSequence name = getString(R.string.app_name);
             String description = getString(R.string.app_name);
-            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            int importance = NotificationManager.IMPORTANCE_LOW;
             NotificationChannel channel = new NotificationChannel("timer", name, importance);
             channel.setDescription(description);
+            channel.setSound(null,null);
             // Register the channel with the system; you can't change the importance
             // or other notification behaviors after this
             NotificationManager notificationManager = getSystemService(NotificationManager.class);
@@ -123,13 +144,17 @@ public class CountService extends Service {
                 .setContentIntent(pendingIntent)
                 .setAutoCancel(true)
                 .setOnlyAlertOnce(true)
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+                .setSound(null)
+                .setPriority(NotificationCompat.PRIORITY_MIN);
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
         notificationManager.notify(1,builder.build());
+        startForeground(1,builder.build());
     }
 
 
     private void removeNotification(){
+        stopForeground(true);
+        handler.sendMessage(handler.obtainMessage(1,0));
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
         notificationManager.cancel(1);
     }
@@ -142,7 +167,7 @@ public class CountService extends Service {
         builder.setContentIntent(pendingIntent);
         builder.setContentText(DateUtils.getFormatTimeFromSeconds(current));
         notificationManager.notify(1,builder.build());
-    }
+}
 
 
     public void addObserver(Observer observer){
@@ -154,7 +179,11 @@ public class CountService extends Service {
         @Override
         public void handleMessage(Message msg) {
             //通知更新
-            myObservable.notifyChanged(current);
+            if(msg.what==1){
+                myObservable.notifyObservers(-1);
+            }else{
+                myObservable.notifyChanged(current);
+            }
         }
     };
 
