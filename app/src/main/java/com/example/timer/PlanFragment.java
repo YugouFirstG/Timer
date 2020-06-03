@@ -12,11 +12,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.example.timer.Adapter.CommAdapter;
+import com.example.timer.DateBase.RecordsDao;
 import com.example.timer.Interfaces.IViewType;
 import com.example.timer.Interfaces.QuickMultiSupport;
 import com.example.timer.Model.MultiBean;
+import com.example.timer.Model.RecordBean;
 import com.haibin.calendarview.Calendar;
 import com.haibin.calendarview.CalendarLayout;
 import com.haibin.calendarview.CalendarView;
@@ -45,9 +48,10 @@ public class PlanFragment extends Fragment implements CalendarView.OnCalendarSel
     private CalendarLayout calendarLayout;
     private CalendarView mCalenderView;
     private RecyclerView mRecycleView;
+    private ImageView imageView;
     private SwipeRefreshLayout mRefresh;
-    private QuickMultiSupport<IViewType> mQuickSupport;
-    private List<IViewType> mData = new ArrayList<>();
+    private QuickMultiSupport<RecordBean> mQuickSupport;
+    private List<RecordBean> mData = new ArrayList<>();
 
 
     public PlanFragment() {
@@ -93,6 +97,12 @@ public class PlanFragment extends Fragment implements CalendarView.OnCalendarSel
 
     private void initFragment(View view) {
         initData();
+        imageView = view.findViewById(R.id.nothing);
+        if(mData.size()==0){
+            imageView.setVisibility(View.VISIBLE);
+        }else {
+            imageView.setVisibility(View.GONE);
+        }
         calendarLayout = view.findViewById(R.id.calendarLayout);
         mCalenderView = view.findViewById(R.id.calendarView);
         mCalenderView.setOnCalendarSelectListener(this);
@@ -115,33 +125,31 @@ public class PlanFragment extends Fragment implements CalendarView.OnCalendarSel
 
     private void initData() {
         mData.clear();
-        for (int i = 0; i < 199; i++) {
-            MultiBean bean = new MultiBean();
-            bean.name = "mData----" + i;
-            mData.add(bean);
-        }
-        mQuickSupport = new QuickMultiSupport<IViewType>() {
+//        for (int i = 0; i < 199; i++) {
+//            MultiBean bean = new MultiBean();
+//            bean.name = "mData----" + i;
+//            mData.add(bean);
+//        }
+        mData = RecordsDao.getInstance(getContext()).select(null,null,null);
+
+        mQuickSupport = new QuickMultiSupport<RecordBean>() {
             @Override
             public int getViewTypeCount() {
                 return 0;
             }
 
             @Override
-            public int getLayoutId(IViewType data) {
-                if (data instanceof MultiBean) {
-                    return R.layout.item_plan;
-                }
-
+            public int getLayoutId(RecordBean data) {
                 return 0;
             }
 
             @Override
-            public int getItemViewType(IViewType data) {
+            public int getItemViewType(RecordBean data) {
                 return 0;
             }
 
             @Override
-            public boolean isSpan(IViewType data) {
+            public boolean isSpan(RecordBean data) {
                 return false;
             }
         };

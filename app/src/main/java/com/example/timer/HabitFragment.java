@@ -6,14 +6,18 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.example.timer.Adapter.HabitAdapter;
+import com.example.timer.DateBase.RecordsDao;
 import com.example.timer.Interfaces.IViewType;
 import com.example.timer.Interfaces.QuickMultiSupport;
 import com.example.timer.Model.MultiBean;
+import com.example.timer.Model.RecordBean;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,8 +39,9 @@ public class HabitFragment extends Fragment {
     private String mParam2;
 
     private RecyclerView mRecycleView;
-    private List<IViewType> mData = new ArrayList<>();
-    private QuickMultiSupport<IViewType> mQuickSupport;
+    private ImageView imageView;
+    private List<RecordBean> mData = new ArrayList<>();
+    private QuickMultiSupport<RecordBean> mQuickSupport;
 
     public HabitFragment() {
         // Required empty public constructor
@@ -80,6 +85,12 @@ public class HabitFragment extends Fragment {
 
     private void initFragment(View view) {
         initData();
+        imageView = view.findViewById(R.id.nothing);
+        if(mData.size()==0){
+            imageView.setVisibility(View.VISIBLE);
+        }else {
+            imageView.setVisibility(View.GONE);
+        }
         mRecycleView = view.findViewById(R.id.recycle_list2);
         mRecycleView.setLayoutManager(new LinearLayoutManager(this.getContext()));
         mRecycleView.setAdapter(new HabitAdapter(this.getContext(), mData));
@@ -87,33 +98,32 @@ public class HabitFragment extends Fragment {
 
     private void initData() {
         mData.clear();
-        for (int i = 0; i < 199; i++) {
-            MultiBean bean = new MultiBean();
-            bean.name = "mData----" + i;
-            mData.add(bean);
-        }
-        mQuickSupport = new QuickMultiSupport<IViewType>() {
+//        for (int i = 0; i < 199; i++) {
+//            MultiBean bean = new MultiBean();
+//            bean.name = "mData----" + i;
+//            mData.add(bean);
+//        }
+        mData = RecordsDao.getInstance(getContext()).select(null,null,null);
+        Log.d("111", "initData: "+mData);
+
+        mQuickSupport = new QuickMultiSupport<RecordBean>() {
             @Override
             public int getViewTypeCount() {
                 return 0;
             }
 
             @Override
-            public int getLayoutId(IViewType data) {
-                if (data instanceof MultiBean) {
-                    return R.layout.item_habit;
-                }
-
+            public int getLayoutId(RecordBean data) {
                 return 0;
             }
 
             @Override
-            public int getItemViewType(IViewType data) {
+            public int getItemViewType(RecordBean data) {
                 return 0;
             }
 
             @Override
-            public boolean isSpan(IViewType data) {
+            public boolean isSpan(RecordBean data) {
                 return false;
             }
         };

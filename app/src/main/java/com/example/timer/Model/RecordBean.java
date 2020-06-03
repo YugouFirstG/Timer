@@ -2,6 +2,9 @@ package com.example.timer.Model;
 
 import com.example.timer.Interfaces.IViewType;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class RecordBean implements IViewType {
     private String type;
@@ -36,6 +39,8 @@ public class RecordBean implements IViewType {
         this.isComplete = isComplete;
     }
 
+    public RecordBean(){}
+
     public void setId(int id) {
         this.id = id;
     }
@@ -46,6 +51,10 @@ public class RecordBean implements IViewType {
 
     public String getTitle() {
         return title;
+    }
+
+    public void setTitle(String title){
+        this.title = title;
     }
 
     public String getContent() {
